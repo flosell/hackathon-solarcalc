@@ -1,9 +1,9 @@
 var sunCalculator = function () {
   var PEAK_DATA = {
-    'Baden-Wuerttemberg': 1041.973,
+    'Baden-Wurttemberg': 1041.973,
     'Bavaria': 1025.547,
     'Thuringia': 998.547,
-    'Saxony-Anhalt': 988.167,
+    'Sachsen-Anhalt': 988.167,
     'Saarland': 998.113,
     'Hesse': 954.843,
     'Saxony': 939.340,
