@@ -145,17 +145,18 @@ var initMarkers = function(map) {
         if (!polylineInitialized()) {
             initializePolyline(map,coord);
         }else {
-            // Next we add the geoCoordinate to the markerPolyline
-            markerPolyline.add(coord);
-
-            // We store added coordinates so we can remove them later on
-            addedCoords.push(coord);
             if (markerPolyline.reachedFirstMarkerAgain(coord)) {
                 var coords = markerPolyline.orderedCoords;
                 displayArea(map,coords);
 //                alert("size: "+areaInSquareMeters(coords));
 //                stateForCoordinates(coords,function(state){alert("we are in "+state)})
+            }else {
+                markerPolyline.add(coord);
+
+                // We store added coordinates so we can remove them later on
+                addedCoords.push(coord);
             }
+            // Next we add the geoCoordinate to the markerPolyline
     	}
     });
 }
