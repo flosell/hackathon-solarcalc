@@ -1,7 +1,8 @@
 'use strict';
 
 var solarApp = angular.module('solarcap-app', [
-  'googlechart'
+  'googlechart',
+  'ui.bootstrap'
 ])
 
 solarApp.controller('CalcCtrl', [
@@ -14,10 +15,12 @@ solarApp.controller('CalcCtrl', [
       selectedState: "Berlin",
       kind: "HOME",
       residents: 1
-    }
+    };
 
-    $scope.subsidy = ""
-    $scope.acquisitionCosts = ""
+    $scope.recommendations = [];
+
+    $scope.subsidy = "";
+    $scope.acquisitionCosts = "";
 
     $scope.$watch("inputData",function(data) {
       var calculator = sunCalculator();
@@ -27,6 +30,7 @@ solarApp.controller('CalcCtrl', [
       $scope.subsidy = calculationResult.yearlySubsidy;
       $scope.acquisitionCosts = calculationResult.acquisitionCosts;
       $scope.amortizationInYears = calculationResult.amortizationInYears;
+      $scope.generateChartDate();
 
     },true);
 
@@ -63,10 +67,10 @@ solarApp.controller('CalcCtrl', [
       },
       "options": {
         "title": "Graph",
-        "isStacked": "true",
+        "isStacked": "false",
         "colors": ['#4A89DC','#2dcff1'],
         "fill": 40,
-        'chartArea': {'width': '85%', 'height': '80%'},
+        'chartArea': {'width': '75%', 'height': '80%'},
         'legend': {'position': 'top'},
         animation: {
           duration: 1000,
@@ -88,12 +92,11 @@ solarApp.controller('CalcCtrl', [
       "formatters": {}
     }
 
-
-
-
     $scope.generateChartDate = function(){
       var consumption = [ 0.033, 0.017, 0.023, 0.056, 0.061, 0.052, 0.056, 0.061, 0.033 ];
-      var output = [0, 0, 0, 0.45, 0.86, 0.65, 0, 0, 0];
+      var output = [0, 0, 0, 0.11, 0.21, 0.16, 0, 0, 0];
+
+      $scope.chartObject.data.rows = [];
 
       for(var i = 0; i <= 8; i++){
         $scope.chartObject.data.rows.push({
@@ -105,7 +108,7 @@ solarApp.controller('CalcCtrl', [
               "v": $scope.inputData.residents * consumption[i]
             },
             {
-              "v": output[i] * 0.15 // * qm
+              "v": $scope.inputData.selectedArea * output[i] * 0.15
             }
           ]
         });
@@ -123,7 +126,6 @@ solarApp.controller('CalcCtrl', [
     }
 
     $scope.setAddress = function(addr){
-       debugger
        $scope.address = addr;
     }
 

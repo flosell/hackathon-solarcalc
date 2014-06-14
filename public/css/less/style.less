@@ -83,7 +83,7 @@ body {
 }
 
 .chart {
-  height: 300px;
+  height: 250px;
   width: 100%;
 }
 
@@ -99,4 +99,25 @@ body {
   transition: background-color .22s,border-color .22s,box-shadow .22s;
   outline: none;
   text-align: center;
+}
+
+.typeahead {
+  .dropdown-menu {
+    width: 100%;
+  }
+
+  .active {
+
+  }
+}
+
+.dropdown-menu>.active>a,
+.dropdown-menu>.active>a:hover,
+.dropdown-menu>.active>a:focus {
+  background: @lightBlue !important;
+  color: #fff !important;
+}
+
+.dropdown-menu {
+  background-color: #fff;
 }

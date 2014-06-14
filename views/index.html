@@ -17,6 +17,7 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
   </head>
   <body ng-app="solarcap-app">
 
@@ -26,25 +27,28 @@
         <div class="full-height" id="mapContainer" ng-controller="MapCtrl"></div>
       </div>
       <div class="col-xs-12 col-sm-4 panel-right full-height">
+        <script type="text/ng-template" id="typeaheadTemplate.html">
+          <a>
+            <span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
+          </a>
+        </script>
         <form class="row-padding" role="form" ng-controller="CalcCtrl" ng-submit="doSearch()">
           <div class="row">
-            <div class="col-xs-8">
+            <div class="col-xs-12">
               <!--<label for="address">Address:</label>-->
               <div class="input-group">
-                <input type="text" class="form-control" ng-change="doRecommend()" ng-model="address" placeholder="Where do you live mate?">
+                <!--<input type="text" class="form-control" ng-change="doRecommend()" ng-model="address" placeholder="Where do you live mate?">-->
+                <div class="typeahead">
+                  <input class="form-control" type="text" ng-model="address" placeholder="Where do you live mate?" ng-change="doRecommend()" typeahead-on-select="doSearch()" typeahead="r for r in recommendations" typeahead-template-url="typeaheadTemplate.html">
+                </div>
                 <span class="input-group-btn">
                   <button class="btn btn-info btn-blue" type="button" name="address" id="address" ng-click="doSearch()">&nbsp;&nbsp;&nbsp;<i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;</button>
                 </span>
               </div>
-              <div>
-                  <div ng-repeat="recommendation in recommendations">
-                      <a ng-click='setAddress("{{recommendation}}")'>{{recommendation}}</a>
-                  </div>
-              </div>
             </div>
           </div>
           <div class="row">
-            <div class="col-xs-8">
+            <div class="col-xs-12">
               <label>Type:</label>
               <div class="btn-group btn-group-justified type-picker">
                 <div class="btn-group">
@@ -57,7 +61,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-xs-8">
+            <div class="col-xs-12">
               <label>Residents:</label>
               <div class="rating-list">
                 <i class="fa fa-child fa-3x rating-item" ng-class="{'active': inputData.residents >= 1}" ng-click="setRatingValue(1)"></i>
@@ -102,6 +106,7 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
   <script src="vendor/js/bootstrap.min.js"></script>
+  <script src="vendor/js/ui-bootstrap-custom-tpls-0.10.0.min.js"></script>
   <script src="vendor/js/ng-google-chart.js"></script>
   <!--
   <script src="vendor/js/d3.min.js"></script>
