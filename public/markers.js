@@ -20,7 +20,7 @@ MarkerPolyline.prototype.init = function (coords, props) {
         marker,
         lineProps = props.polyline || {},
         markerProps = (this.markerProps = props.marker || {});
-    this.firstCoord = coords[0];
+    this.orderedCoords = [];
     this.coords = {};
 
     // Create a polyline
@@ -36,6 +36,7 @@ MarkerPolyline.prototype.init = function (coords, props) {
         marker = new nokia.maps.map.StandardMarker(coord, markerProps);
         this.coords[coord.latitude + "_" + coord.longitude] = { idx: i + 1, marker: marker };
         this.objects.add(marker);
+        this.orderedCoords.push(coord);
     }
 };
 
@@ -60,6 +61,7 @@ MarkerPolyline.prototype.add = function (coord) {
          * accessable via the path property
          */
         this.polyline.path.add(coord);
+        this.orderedCoords.push(coord);
     }
 };
 
@@ -99,12 +101,12 @@ MarkerPolyline.prototype.remove = function (coord) {
     marker.destroy();
 
     delete this.coords[key];
+    // TODO: remove from ordered coords
 };
 
 MarkerPolyline.prototype.reachedFirstMarkerAgain = function(currentCoord) {
-    var distance = this.firstCoord.distance(currentCoord)
+    var distance = this.orderedCoords[0].distance(currentCoord)
     return distance < 2;
-
 }
 
 var initMarkers = function(map) {
@@ -149,7 +151,7 @@ var initMarkers = function(map) {
             // We store added coordinates so we can remove them later on
             addedCoords.push(coord);
             if (markerPolyline.reachedFirstMarkerAgain(coord)) {
-                alert("at the end");
+                displayArea(map,markerPolyline.orderedCoords);
             }
     	}
     });
