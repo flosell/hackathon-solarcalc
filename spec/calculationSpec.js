@@ -158,11 +158,18 @@ describe('sunCalculator', function(){
     });
   });
 
+  describe('calculateAmortization()', function () {
+    it('should return object including all needed data', function () {
+      expect(calculator.calculateAmortization(90000.00, 5762.14)).toEqual(16);
+    });
+  });
+
   describe('calculateSolarCap()', function () {
     it('should return object including all needed data', function () {
       var returnObject = {
         yearlySubsidy: 5762.14,
         acquisitionCosts: 90000.00,
+        amortizationInYears: 16,
         error: undefined
       };
 

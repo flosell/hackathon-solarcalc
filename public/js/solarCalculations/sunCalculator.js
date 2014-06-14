@@ -35,6 +35,10 @@ var sunCalculator = function () {
     TODAY = newDate;
   };
 
+  instance.calculateAmortization = function(acquisitionCost, grossProfit) {
+    return formatFloat(acquisitionCost / grossProfit, 0);
+  };
+
   instance.calculateAcquisitionCosts = function (KWP, kind) {
     if (KWP) {
       return kind === 'HOME'
@@ -77,6 +81,8 @@ var sunCalculator = function () {
 
       returnObject.yearlySubsidy = instance.calculateSubsidy(actualKWP, state, 0);
       returnObject.acquisitionCosts = instance.calculateAcquisitionCosts(actualKWP, kind);
+      returnObject.amortizationInYears = instance.calculateAmortization(returnObject.acquisitionCosts,
+        returnObject.yearlySubsidy);
     } else {
       returnObject.error = 'argument missing';
     }
