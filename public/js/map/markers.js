@@ -128,33 +128,23 @@ var initMarkers = function(map) {
         map.objects.add(markerPolyline);
     };
 
-    // Create a new polyline with markers
-
-
-    /* We would like to add event listener on mouse click or finger tap so we check
-     * nokia.maps.dom.Page.browser.touch which indicates whether the used browser has a touch interface.
-     */
     var TOUCH = nokia.maps.dom.Page.browser.touch,
     	CLICK = TOUCH ? "tap" : "click",
     	addedCoords = [];
 
-    // Attach an event listeners on mouse click / touch to add points to
     map.addListener(CLICK, function (evt) {
-    	// We translate a screen pixel into geo coordinate (latitude, longitude)
     	var coord = map.pixelToGeo(evt.displayX, evt.displayY);
         if (!polylineInitialized()) {
             initializePolyline(map,coord);
         }else {
-            // Next we add the geoCoordinate to the markerPolyline
-            markerPolyline.add(coord);
-
-            // We store added coordinates so we can remove them later on
-            addedCoords.push(coord);
             if (markerPolyline.reachedFirstMarkerAgain(coord)) {
                 var coords = markerPolyline.orderedCoords;
                 displayArea(map,coords);
-                alert("size: "+areaInSquareMeters(coords));
-                stateForCoordinates(coords,function(state){alert("we are in "+state)})
+//                alert("size: "+areaInSquareMeters(coords));
+//                stateForCoordinates(coords,function(state){alert("we are in "+state)})
+            }else {
+                markerPolyline.add(coord);
+                addedCoords.push(coord);
             }
     	}
     });
