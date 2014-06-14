@@ -22,15 +22,17 @@ var sunCalculator = function () {
 
   var BASE_SUBSIDIES = [13.01, 12.34, 11.01];
 
-  var KWH_PER_PERSON = 1200;
-
   var ACQUISITION_COST_PER_KWP_HOME = 1500;
 
   var ACQUISITION_COST_PER_KWP_FIELD = 1600;
 
-  var ADDITIONAL_SUBSIDY = 0;
-
   var CO2_SAVINGS_IN_GRAMM = 700;
+
+  var GENERATION_IN_KWH_PER_KWP_PER_DAY = 2.85;
+
+  var CONSUMPTION_PER_PERSON_DAY = 2.2;
+
+  var EXTRA_SUBSIDY_IN_CENT = 13;
 
   var instance = {};
 
@@ -51,13 +53,39 @@ var sunCalculator = function () {
     return sqm ? formatFloat(sqm * 0.15, 5) : undefined;
   };
 
-  instance.calculateKWHYearForKWPForState = function (KWP, state) {
+//  instance.calculateKWHYearForKWPForState = function (KWP, state) {
+//    var KWHperKWP = undefined;
+//    if (KWP && state) {
+//
+//      KWHperKWP = getStateKWHData(state) ? formatFloat((getStateKWHData(state) * KWP) - (PEOPLE * KWH_PER_PERSON), 3) : undefined;
+////   +smallScale:   ((KWP * KWHstate) - (numberPerson * 1000) - 500) * smallScale
+////   +midScale:     (KWP * KWHstate) * mediumScale
+////  + largeScale:   (KWP * KWHstate) * largeScale
+//// +      ALL TOGETHER:
+//    }
+//    return KWHperKWP;
+//  };
+
+
+  function calculateKWHYearForKWPForStateSmall(KWP, state) {
     var KWHperKWP = undefined;
     if (KWP && state) {
-      KWHperKWP = getStateKWHData(state) ? formatFloat((getStateKWHData(state) * KWP) - (PEOPLE * KWH_PER_PERSON), 3) : undefined;
+      if (getStateKWHData(state)) {
+        KWHperKWP = formatFloat(((KWP * getStateKWHData(state)) - (PEOPLE * 1000) - 500));
+      }
+      return KWHperKWP;
     }
-    return KWHperKWP;
-  };
+  }
+
+  function calculateKWHYearForKWPForStateOther(KWP, state) {
+    var KWHperKWP = undefined;
+    if (KWP && state) {
+      if (getStateKWHData(state)) {
+        KWHperKWP = formatFloat(KWP * getStateKWHData(state), 3);
+      }
+      return KWHperKWP;
+    }
+  }
 
   instance.calculateCO2Savings = function (KWP, state) {
     return getStateKWHData(state) ? formatGrammtoKG(getStateKWHData(state) * KWP * CO2_SAVINGS_IN_GRAMM) : undefined;
@@ -86,22 +114,24 @@ var sunCalculator = function () {
     }
   };
 
+  function calculateExtraSubsidy(KWP) {
+    return ((GENERATION_IN_KWH_PER_KWP_PER_DAY * KWP) - (CONSUMPTION_PER_PERSON_DAY * PEOPLE)) * EXTRA_SUBSIDY_IN_CENT;
+  }
+
   instance.calculateSubsidy = function (KWP, state, sum) {
+    if (sum === 0) {sum = calculateExtraSubsidy(KWP)}
+
     if (KWP <= 10) {
-      var midSumSmall = instance.calculateKWHYearForKWPForState(KWP, state) * SUBSIDIES['small'] + sum + additionalSubsidy(KWP);
+      var midSumSmall = calculateKWHYearForKWPForStateSmall(KWP, state) * SUBSIDIES['small'] + sum;
       return formatCentToEuro(midSumSmall);
     } else if (KWP <= 40) {
-      var midSumMedium = instance.calculateKWHYearForKWPForState(KWP - 10, state) * SUBSIDIES['medium'] + sum + additionalSubsidy(KWP - 10);
+      var midSumMedium = calculateKWHYearForKWPForStateOther(KWP - 10, state) * SUBSIDIES['medium'] + sum;
       return instance.calculateSubsidy(10, state, midSumMedium);
     } else {
-      var midSumMediumLarge = instance.calculateKWHYearForKWPForState(KWP - 40, state) * SUBSIDIES['large'] + sum + additionalSubsidy(KWP - 40);
+      var midSumMediumLarge = calculateKWHYearForKWPForStateOther(KWP - 40, state) * SUBSIDIES['large'] + sum;
       return instance.calculateSubsidy(40, state, midSumMediumLarge);
     }
   };
-
-  function additionalSubsidy(KWP) {
-    return KWP * ADDITIONAL_SUBSIDY;
-  }
 
   function getMonthsDifference(fixedDate, today) {
     var d1Y = fixedDate.getFullYear();

@@ -25,65 +25,35 @@ describe('sunCalculator', function () {
     });
   });
 
-  describe('calculateKWHYearForKWPForState', function () {
-
-    beforeEach(function () {
-      calculator = sunCalculator();
-    });
-
-    it('should return undefined for undefined state', function () {
-      expect(calculator.calculateKWHYearForKWPForState(1, undefined)).toEqual(undefined);
-    });
-
-    it('should return undefined for undefined KWP for no state', function () {
-      expect(calculator.calculateKWHYearForKWPForState(undefined, 'Hessen')).toEqual(undefined);
-    });
-
-    it('should return 1041.973 for 1 KWP for Baden-Württemberg', function () {
-      expect(calculator.calculateKWHYearForKWPForState(1, 'Baden-Württemberg')).toEqual(1041.973);
-    });
-
-    it('should return 856.610 for 1 KWP for Hamburg', function () {
-      expect(calculator.calculateKWHYearForKWPForState(1, 'Hamburg')).toEqual(856.610);
-    });
-
-    it('should return 1878.680 for 2 KWP for Sachsen', function () {
-      expect(calculator.calculateKWHYearForKWPForState(2, 'Saxony')).toEqual(1878.680);
-    });
-
-    it('should return 20829.042 for 26 KWP for Bremen', function () {
-      expect(calculator.calculateKWHYearForKWPForState(26, 'Bremen')).toEqual(20829.042);
-    });
-  });
-
   describe('calculateSubsidy', function () {
 
     beforeEach(function () {
       calculator = sunCalculator();
     });
 
-    it('should return 135.56 Euro for 1 KWP in Baden-Wuerttemberg', function () {
-      expect(calculator.calculateSubsidy(1, 'Baden-Württemberg', 0)).toBe(135.56);
+    it('should return 70.88 Euro for 1 KWP in Baden-Wuerttemberg', function () {
+      expect(calculator.calculateSubsidy(1, 'Baden-Württemberg', 0)).toBe(70.88);
     });
 
-    it('should return 271.12 Euro for 2 KWP in Baden-Wuerttemberg', function () {
-      expect(calculator.calculateSubsidy(2, 'Baden-Württemberg', 0)).toBe(271.12);
+    it('should return 206.82 Euro for 2 KWP in Baden-Wuerttemberg', function () {
+      expect(calculator.calculateSubsidy(2, 'Baden-Württemberg', 0)).toBe(206.82);
     });
 
-    it('should return 1355.61 Euro for 10 KWP in Baden-Wuerttemberg', function () {
-      expect(calculator.calculateSubsidy(10, 'Baden-Württemberg', 0)).toBe(1355.61);
+    it('should return 1294.3 Euro for 10 KWP in Baden-Wuerttemberg', function () {
+      expect(calculator.calculateSubsidy(10, 'Baden-Württemberg', 0)).toBe(1294.3);
     });
 
-    it('should return 1484.19 Euro for 11 KWP in Baden-Wuerttemberg', function () {
-      expect(calculator.calculateSubsidy(11, 'Baden-Württemberg', 0)).toBe(1484.19);
+    it('should return 1423.25 Euro for 11 KWP in Baden-Wuerttemberg', function () {
+      expect(calculator.calculateSubsidy(11, 'Baden-Württemberg', 0)).toBe(1423.25);
     });
 
-    it('should return 1484.19 Euro for 60 KWP in Baden-Wuerttemberg', function () {
-      expect(calculator.calculateSubsidy(60, 'Baden-Württemberg', 0)).toBe(7507.42);
+    it('should return 7334.24 Euro for 60 KWP in Baden-Wuerttemberg', function () {
+      calculator.setPeople(1);
+      expect(calculator.calculateSubsidy(60, 'Baden-Württemberg', 0)).toBe(7334.24);
     });
 
-    it('should return 8835.43 Euro for 80 KWP in Sachsen', function () {
-      expect(calculator.calculateSubsidy(80, 'Saxony', 0)).toBe(8836.37);
+    it('should return 8800.91 Euro for 80 KWP in Sachsen', function () {
+      expect(calculator.calculateSubsidy(80, 'Saxony', 0)).toBe(8800.91);
     });
   });
 
@@ -124,10 +94,10 @@ describe('sunCalculator', function () {
       calculator = sunCalculator();
     });
 
-    it('should return 5762.14 Euro for 60 KWP in BW', function () {
+    it('should return 6943.09 Euro for 60 KWP in BW', function () {
       calculator.setPeople(4);
 
-      expect(calculator.calculateSubsidy(60, 'Baden-Württemberg', 0)).toBe(5762.14);
+      expect(calculator.calculateSubsidy(60, 'Baden-Württemberg', 0)).toBe(6943.09);
     });
   });
 
@@ -175,10 +145,10 @@ describe('sunCalculator', function () {
 
     it('should return object including all needed data (4 persons)', function () {
       var returnObject = {
-        yearlySubsidy: 5762.14,
+        yearlySubsidy: 6943.09,
         acquisitionCosts: 90000.00,
         CO2Savings: 43762.87,
-        amortizationInYears: 16,
+        amortizationInYears: 13,
         error: undefined
       };
 
@@ -187,10 +157,10 @@ describe('sunCalculator', function () {
 
     it('should return object including all needed data (1 person)', function () {
       var returnObject = {
-        yearlySubsidy: 7071.1,
+        yearlySubsidy: 7334.24,
         acquisitionCosts: 90000.00,
         CO2Savings: 43762.87,
-        amortizationInYears: 13,
+        amortizationInYears: 12,
         error: undefined
       };
 

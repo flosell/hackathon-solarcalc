@@ -32,3 +32,36 @@ var searchAddress = function(searchTerm, callback) {
         onComplete: processResults
     });
 }
+
+var initSearchRecommendations = function(map) {
+    var customSearchBox = new nokia.places.widgets.SearchBox({
+        targetNode: "addrSearch",
+//        template: "customSearchBox",
+        searchCenter: function () {
+            return {
+                latitude: 52.516274,
+                longitude: 13.377678
+            };
+        },
+        onResults: function (data) {
+            // The argument data, which is an instance of nokia.places.objectsSearchResponseView
+            // contains the search results
+
+        }
+    });
+}
+
+var recommend = function(searchTerm, callback) {
+    var processResults = function (data, requestStatus, requestId) {
+        var titles = data.results.items.map(function(item) {
+            return item.title;
+        });
+
+        callback(titles);
+    }
+
+    searchManager = nokia.places.search.manager.findPlaces({
+        searchTerm: searchTerm,
+        onComplete: processResults
+    });
+}
