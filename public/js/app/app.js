@@ -9,4 +9,7 @@ solarApp.controller('SearchCtrl', [
   }
 ]);
 
+solarApp.directive();
+
+
 
