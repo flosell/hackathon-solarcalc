@@ -26,7 +26,7 @@
         <div class="full-height" id="mapContainer" ng-controller="MapCtrl"></div>
       </div>
       <div class="col-xs-12 col-sm-5 panel-right full-height">
-        <form class="row-padding" role="form" ng-controller="SearchCtrl">
+        <form class="row-padding" role="form" ng-controller="SearchCtrl" ng-submit="doSearch()">
 
           <div class="row">
             <div class="col-xs-8">
@@ -34,7 +34,7 @@
               <div class="input-group">
                 <input type="text" class="form-control" ng-model="address">
                   <span class="input-group-btn">
-                    <button class="btn btn-info btn-blue" type="button" name="address" id="address" ng-click="doSearch()">&nbsp;&nbsp;&nbsp;<i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;</button>
+                    <button class="btn btn-info btn-blue" type="button" name="address" id="address">&nbsp;&nbsp;&nbsp;<i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;</button>
                   </span>
               </div>
             </div>
