@@ -162,7 +162,7 @@ describe('sunCalculator', function(){
     it('should return object including all needed data', function () {
       var returnObject = {
         yearlySubsidy: 5762.14,
-        acquisitionCosts: 90000,
+        acquisitionCosts: 90000.00,
         error: undefined
       };
 
