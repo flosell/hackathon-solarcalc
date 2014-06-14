@@ -47,13 +47,6 @@ solarApp.controller('MapCtrl', [
 solarApp.controller('CalcCtrl', [
   '$scope',
   function ($scope) {
-
-    initMap(function(data) {
-        $scope.$apply(function(){
-            $scope.selectedArea = data
-        })
-    })
-
     $scope.inputData = {
         selectedArea: 0,
         selectedState: "Berlin",
