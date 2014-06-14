@@ -19,7 +19,7 @@ var searchAddress = function(searchTerm, callback) {
                     coords.push(locations[i].position)
                 }
                 // Next we add the marker(s) to the map's object collection so they will be rendered onto the map
-
+                debugger
 
                 callback(coords[0]);
             } else {

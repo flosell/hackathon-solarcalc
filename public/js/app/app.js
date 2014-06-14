@@ -18,7 +18,7 @@ solarApp.controller('SearchCtrl', [
     }
 
     $scope.$watch("parameter",function(parameter) {
-            $scope.$parent.inputData.kind = parameter.type;
+        $scope.$parent.inputData.kind = parameter.type;
     },true);
   }
 ]);
@@ -65,7 +65,6 @@ solarApp.controller('CalcCtrl', [
     $scope.acquisitionCosts = ""
 
     $scope.$watch("inputData",function(data) {
-        debugger
         var calculator = sunCalculator();
 
         var calculationResult = calculator.calculateSolarCap(data.selectedArea, data.selectedState, data.residents, data.kind)
