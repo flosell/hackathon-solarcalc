@@ -144,11 +144,14 @@ describe('sunCalculator', function () {
     });
 
     it('should return object including all needed data (4 persons)', function () {
+      calculator.setBattery(true);
+
       var returnObject = {
         yearlySubsidy: 6943.09,
-        acquisitionCosts: 90000.00,
+        acquisitionCosts: 104000.00,
         CO2Savings: 43762.87,
-        amortizationInYears: 13,
+        savingFromBattery: 208.78,
+        amortizationInYears: 15,
         error: undefined
       };
 
@@ -156,11 +159,14 @@ describe('sunCalculator', function () {
     });
 
     it('should return object including all needed data (1 person)', function () {
+      calculator.setBattery(true);
+
       var returnObject = {
         yearlySubsidy: 7334.24,
-        acquisitionCosts: 90000.00,
+        acquisitionCosts: 100000.00,
+        savingFromBattery: 52.20,
         CO2Savings: 43762.87,
-        amortizationInYears: 12,
+        amortizationInYears: 14,
         error: undefined
       };
 
@@ -180,5 +186,9 @@ describe('sunCalculator', function () {
     it('should save 7178.83 KG CO2 per year for a 10 KWP plant in Bavaria', function () {
       expect(calculator.calculateCO2Savings(10, 'Bavaria')).toEqual(7178.83);
     });
+  });
+
+  describe('xxx', function () {
+//    acquis
   });
 });
