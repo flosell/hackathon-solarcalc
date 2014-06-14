@@ -31,29 +31,29 @@ describe('sunCalculator', function () {
       calculator = sunCalculator();
     });
 
-    it('should return 72.02 Euro for 1 KWP in Baden-Wuerttemberg', function () {
-      expect(calculator.calculateSubsidy(1, 'Baden-Württemberg', 0)).toBe(72.02);
+    it('should return 70.88 Euro for 1 KWP in Baden-Wuerttemberg', function () {
+      expect(calculator.calculateSubsidy(1, 'Baden-Württemberg', 0)).toBe(70.88);
     });
 
-    it('should return 209.09 Euro for 2 KWP in Baden-Wuerttemberg', function () {
-      expect(calculator.calculateSubsidy(2, 'Baden-Württemberg', 0)).toBe(209.09);
+    it('should return 206.82 Euro for 2 KWP in Baden-Wuerttemberg', function () {
+      expect(calculator.calculateSubsidy(2, 'Baden-Württemberg', 0)).toBe(206.82);
     });
 
-    it('should return 1305.67 Euro for 10 KWP in Baden-Wuerttemberg', function () {
-      expect(calculator.calculateSubsidy(10, 'Baden-Württemberg', 0)).toBe(1305.67);
+    it('should return 1294.3 Euro for 10 KWP in Baden-Wuerttemberg', function () {
+      expect(calculator.calculateSubsidy(10, 'Baden-Württemberg', 0)).toBe(1294.3);
     });
 
-    it('should return 1435.76 Euro for 11 KWP in Baden-Wuerttemberg', function () {
-      expect(calculator.calculateSubsidy(11, 'Baden-Württemberg', 0)).toBe(1435.76);
+    it('should return 1423.25 Euro for 11 KWP in Baden-Wuerttemberg', function () {
+      expect(calculator.calculateSubsidy(11, 'Baden-Württemberg', 0)).toBe(1423.25);
     });
 
-    it('should return 7402.49 Euro for 60 KWP in Baden-Wuerttemberg', function () {
+    it('should return 7334.24 Euro for 60 KWP in Baden-Wuerttemberg', function () {
       calculator.setPeople(1);
-      expect(calculator.calculateSubsidy(60, 'Baden-Württemberg', 0)).toBe(7402.49);
+      expect(calculator.calculateSubsidy(60, 'Baden-Württemberg', 0)).toBe(7334.24);
     });
 
-    it('should return 8891.91 Euro for 80 KWP in Sachsen', function () {
-      expect(calculator.calculateSubsidy(80, 'Saxony', 0)).toBe(8891.91);
+    it('should return 8800.91 Euro for 80 KWP in Sachsen', function () {
+      expect(calculator.calculateSubsidy(80, 'Saxony', 0)).toBe(8800.91);
     });
   });
 
@@ -94,10 +94,10 @@ describe('sunCalculator', function () {
       calculator = sunCalculator();
     });
 
-    it('should return 7011.34 Euro for 60 KWP in BW', function () {
+    it('should return 6943.09 Euro for 60 KWP in BW', function () {
       calculator.setPeople(4);
 
-      expect(calculator.calculateSubsidy(60, 'Baden-Württemberg', 0)).toBe(7011.34);
+      expect(calculator.calculateSubsidy(60, 'Baden-Württemberg', 0)).toBe(6943.09);
     });
   });
 
@@ -145,7 +145,7 @@ describe('sunCalculator', function () {
 
     it('should return object including all needed data (4 persons)', function () {
       var returnObject = {
-        yearlySubsidy: 7011.34,
+        yearlySubsidy: 6943.09,
         acquisitionCosts: 90000.00,
         CO2Savings: 43762.87,
         amortizationInYears: 13,
@@ -157,7 +157,7 @@ describe('sunCalculator', function () {
 
     it('should return object including all needed data (1 person)', function () {
       var returnObject = {
-        yearlySubsidy: 7402.49,
+        yearlySubsidy: 7334.24,
         acquisitionCosts: 90000.00,
         CO2Savings: 43762.87,
         amortizationInYears: 12,
