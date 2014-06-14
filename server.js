@@ -9,5 +9,5 @@ app.get('*', function(req, res) {
 	res.render('index.jade');
 });
 
-http.listen(8080);
+http.listen(80);
 console.log("App listening on port 8000");
