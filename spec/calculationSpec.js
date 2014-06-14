@@ -165,7 +165,7 @@ describe('sunCalculator', function(){
   });
 
   describe('calculateSolarCap()', function () {
-    it('should return object including all needed data', function () {
+    it('should return object including all needed data (4 persons)', function () {
       var returnObject = {
         yearlySubsidy: 5762.14,
         acquisitionCosts: 90000.00,
@@ -174,6 +174,17 @@ describe('sunCalculator', function(){
       };
 
       expect(calculator.calculateSolarCap(400, 'Baden-Württemberg', 4, 'HOME')).toEqual(returnObject);
+    });
+
+    it('should return object including all needed data (1 person)', function () {
+      var returnObject = {
+        yearlySubsidy: 7071.1,
+        acquisitionCosts: 90000.00,
+        amortizationInYears: 13,
+        error: undefined
+      };
+
+      expect(calculator.calculateSolarCap(400, 'Baden-Württemberg', 1, 'HOME')).toEqual(returnObject);
     });
 
     it('should return object with error if sqm is missing', function () {

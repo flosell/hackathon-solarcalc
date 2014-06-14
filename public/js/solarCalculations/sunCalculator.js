@@ -27,6 +27,9 @@ var sunCalculator = function () {
   var ACQUISITION_COST_PER_KWP_HOME = 1500;
 
   var ACQUISITION_COST_PER_KWP_FIELD = 1600;
+
+  var ADDITIONAL_SUBSIDY = 0;
+
   var instance = {};
 
   //  FIXED DATE OF SUBSIDIES
@@ -79,16 +82,20 @@ var sunCalculator = function () {
 
   instance.calculateSubsidy = function (KWP, state, sum) {
     if (KWP <= 10) {
-      var midSumSmall = instance.calculateKWHYearForKWPForState(KWP, state) * SUBSIDIES['small'] + sum;
+      var midSumSmall = instance.calculateKWHYearForKWPForState(KWP, state) * SUBSIDIES['small'] + sum + additionalSubsidy(KWP);
       return formatCentToEuro(midSumSmall);
     } else if (KWP <= 40) {
-      var midSumMedium = instance.calculateKWHYearForKWPForState(KWP - 10, state) * SUBSIDIES['medium'] + sum;
+      var midSumMedium = instance.calculateKWHYearForKWPForState(KWP - 10, state) * SUBSIDIES['medium'] + sum + additionalSubsidy(KWP - 10);
       return instance.calculateSubsidy(10, state, midSumMedium);
     } else {
-      var midSumMediumLarge = instance.calculateKWHYearForKWPForState(KWP - 40, state) * SUBSIDIES['large'] + sum;
+      var midSumMediumLarge = instance.calculateKWHYearForKWPForState(KWP - 40, state) * SUBSIDIES['large'] + sum + additionalSubsidy(KWP - 40);
       return instance.calculateSubsidy(40, state, midSumMediumLarge);
     }
   };
+
+  function additionalSubsidy(KWP) {
+    return KWP * ADDITIONAL_SUBSIDY;
+  }
 
   function getMonthsDifference(fixedDate, today) {
     var d1Y = fixedDate.getFullYear();
