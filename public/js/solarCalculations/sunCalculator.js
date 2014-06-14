@@ -67,6 +67,17 @@ var sunCalculator = function(){
     return (d2M+12*d2Y)-(d1M+12*d1Y);
   }
 
+  instance.calculateSolarCap = function(sqm, state, people, kind){
+    instance.setPeople(people);
+    var returnObject = {};
+    var actualKWP = instance.calculateKWP(sqm);
+
+    returnObject.yearlySubsidy = instance.calculateSubsidy(actualKWP, state, 0);
+    returnObject.acquisitionCosts = instance.calculateAcquisitionCosts(actualKWP, kind);
+
+    return returnObject;
+  };
+
   instance.adjustSubsidies = function(fixedDateInput, todayInput) {
     var fixedDate = fixedDateInput ? fixedDateInput : FIXED_DATE;
     var today = todayInput ? todayInput : TODAY;

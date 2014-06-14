@@ -157,4 +157,15 @@ describe('sunCalculator', function(){
       expect(calculator.calculateAcquisitionCosts(10, 'FIELD')).toBe(16000.00);
     });
   });
+
+  describe('calculateSolarCap()', function () {
+    it('should return object including all needed data', function () {
+      var returnObject = {
+        yearlySubsidy: 6343.90,
+        acquisitionCosts: 90000
+      };
+
+      expect(calculator.calculateSolarCap(400, 'Baden-Württemberg', 4, 'HOME')).toEqual(returnObject);
+    });
+  });
 });
