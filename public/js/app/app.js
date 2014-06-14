@@ -65,15 +65,11 @@ solarApp.controller('CalcCtrl', [
 
         var calculator = sunCalculator();
 
-//        var sqm = data.selectedArea;
-//        var state = data.selectedState;
-//        var KWP = calculator.calculateKWP(sqm);
-//        var subsidy = calculator.calculateSubsidy(KWP, state, 0);
-
         var calculationResult = calculator.calculateSolarCap(data.selectedArea, data.selectedState, data.residents, data.kind)
 
         $scope.subsidy = calculationResult.yearlySubsidy;
         $scope.acquisitionCosts = calculationResult.acquisitionCosts;
+        $scope.amortizationInYears = calculationResult.amortizationInYears;
 
     },true);
 
