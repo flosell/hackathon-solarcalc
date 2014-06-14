@@ -124,10 +124,10 @@ describe('sunCalculator', function(){
       calculator = sunCalculator();
     });
 
-    it('should return 6343.89 Euro for 60 KWP in BW', function () {
+    it('should return 5762.14 Euro for 60 KWP in BW', function () {
       calculator.setPeople(4);
 
-      expect(calculator.calculateSubsidy(60, 'Baden-Württemberg', 0)).toBe(6343.90);
+      expect(calculator.calculateSubsidy(60, 'Baden-Württemberg', 0)).toBe(5762.14);
     });
   });
 
@@ -161,7 +161,7 @@ describe('sunCalculator', function(){
   describe('calculateSolarCap()', function () {
     it('should return object including all needed data', function () {
       var returnObject = {
-        yearlySubsidy: 6343.90,
+        yearlySubsidy: 5762.14,
         acquisitionCosts: 90000
       };
 
