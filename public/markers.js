@@ -106,7 +106,7 @@ MarkerPolyline.prototype.remove = function (coord) {
 
 MarkerPolyline.prototype.reachedFirstMarkerAgain = function(currentCoord) {
     var distance = this.orderedCoords[0].distance(currentCoord)
-    return distance < 5;
+    return distance < 2;
 }
 
 var initMarkers = function(map) {
@@ -151,7 +151,9 @@ var initMarkers = function(map) {
             // We store added coordinates so we can remove them later on
             addedCoords.push(coord);
             if (markerPolyline.reachedFirstMarkerAgain(coord)) {
-                displayArea(map,markerPolyline.orderedCoords);
+                var coords = markerPolyline.orderedCoords;
+                displayArea(map,coords);
+                alert("size: "+areaInSquareMeters(coords));
             }
     	}
     });
