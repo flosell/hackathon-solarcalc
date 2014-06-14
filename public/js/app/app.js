@@ -32,16 +32,11 @@ solarApp.controller('MapCtrl', [
     $scope.$watch("selectedArea",function(data) {
         if (data === undefined) return;
 
-        
+        $scope.$parent.inputData.selectedArea = data.selectedArea;
+        $scope.$parent.inputData.selectedState = data.selectedState;
 
-        console.log('DEBUG: ', sunCalculator());
-        console.log('updatedMap: ',data);
-        var calculator = sunCalculator();
-        var sqm = data.selectedArea;
-        var state = data.selectedState;
-        var KWP = calculator.calculateKWP(sqm);
-        var subsidy = calculator.calculateSubsidy(KWP, state, 0);
-        console.log('DEBUG: ',subsidy);
+
+
     })
   }
 ]);
@@ -56,7 +51,31 @@ solarApp.controller('CalcCtrl', [
         })
     })
 
-    $scope.subsidy = "initial"
+    $scope.inputData = {
+        selectedArea: 0,
+        selectedState: "Berlin",
+        kind: "HOME",
+        residents: 1
+    }
+
+    $scope.subsidy = ""
+    $scope.acquisitionCosts = ""
+
+    $scope.$watch("inputData",function(data) {
+
+        var calculator = sunCalculator();
+
+//        var sqm = data.selectedArea;
+//        var state = data.selectedState;
+//        var KWP = calculator.calculateKWP(sqm);
+//        var subsidy = calculator.calculateSubsidy(KWP, state, 0);
+
+        var calculationResult = calculator.calculateSolarCap(data.selectedArea, data.selectedState, data.residents, data.kind)
+
+        $scope.subsidy = calculationResult.yearlySubsidy;
+        $scope.acquisitionCosts = calculationResult.acquisitionCosts;
+
+    },true);
 
   }
 ]);
