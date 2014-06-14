@@ -153,8 +153,8 @@ var initMarkers = function(map) {
             if (markerPolyline.reachedFirstMarkerAgain(coord)) {
                 var coords = markerPolyline.orderedCoords;
                 displayArea(map,coords);
-                alert("size: "+areaInSquareMeters(coords));
-                stateForCoordinates(coords,function(state){alert("we are in "+state)})
+//                alert("size: "+areaInSquareMeters(coords));
+//                stateForCoordinates(coords,function(state){alert("we are in "+state)})
             }
     	}
     });
