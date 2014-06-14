@@ -2,6 +2,7 @@ var express  = require('express');
 var _ = require("underscore");
 var app      = express();
 var http = require('http').Server(app);
+var calcs = require('calcs');
 
 app.use(express.static(__dirname + '/public'));
 
