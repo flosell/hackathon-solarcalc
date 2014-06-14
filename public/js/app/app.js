@@ -13,7 +13,8 @@ solarApp.controller('CalcCtrl', [
       selectedArea: 0,
       selectedState: "Berlin",
       kind: "HOME",
-      residents: 1
+      residents: 1,
+      withBattery: false
     }
 
     $scope.subsidy = ""
@@ -21,7 +22,7 @@ solarApp.controller('CalcCtrl', [
 
     $scope.$watch("inputData",function(data) {
       var calculator = sunCalculator();
-
+      calculator.setBattery(data.withBattery)
       var calculationResult = calculator.calculateSolarCap(data.selectedArea, data.selectedState, data.residents, data.kind)
 
       $scope.subsidy = calculationResult.yearlySubsidy;
@@ -123,7 +124,6 @@ solarApp.controller('CalcCtrl', [
     }
 
     $scope.setAddress = function(addr){
-       debugger
        $scope.address = addr;
     }
 

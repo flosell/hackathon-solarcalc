@@ -66,6 +66,9 @@
                 <i class="fa fa-child fa-3x rating-item" ng-class="{'active': inputData.residents >= 4}" ng-click="setRatingValue(4)"></i>
                 <i class="fa fa-child fa-3x rating-item" ng-class="{'active': inputData.residents == 5}" ng-click="setRatingValue(5)"></i>
               </div>
+              <div>
+                  Calculate with battery? <input type="checkbox" ng-model="inputData.withBattery">
+              </div>
             </div>
           </div>
           <div class="row">
