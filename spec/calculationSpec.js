@@ -48,7 +48,7 @@ describe('sunCalculator', function(){
     });
 
     it('should return 1878.680 for 2 KWP for Sachsen', function () {
-      expect(calculator.calculateKWHYearForKWPForState(2, 'Sachsen')).toEqual(1878.680);
+      expect(calculator.calculateKWHYearForKWPForState(2, 'Saxony')).toEqual(1878.680);
     });
 
     it('should return 20829.042 for 26 KWP for Bremen', function () {
@@ -83,7 +83,7 @@ describe('sunCalculator', function(){
     });
 
     it('should return 8835.43 Euro for 80 KWP in Sachsen', function () {
-      expect(calculator.calculateSubsidy(80, 'Sachsen', 0)).toBe(8836.37);
+      expect(calculator.calculateSubsidy(80, 'Saxony', 0)).toBe(8836.37);
     });
   });
 
@@ -116,5 +116,18 @@ describe('sunCalculator', function(){
 
       expect(calculator.getSubsidies()).toEqual(adjustedSubsidies);
     });
-  })
+  });
+
+  describe('adjustForOwnEnergyConsumption', function(){
+
+    beforeEach(function(){
+      calculator = sunCalculator();
+    });
+
+    it('should return 6343.89 Euro for 60 KWP in BW', function () {
+      calculator.setPeople(4);
+
+      expect(calculator.calculateSubsidy(60, 'Baden-Württemberg', 0)).toBe(6343.90);
+    });
+  });
 });

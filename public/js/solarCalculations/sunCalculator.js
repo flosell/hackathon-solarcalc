@@ -4,6 +4,11 @@ var sunCalculator = function(){
 //  FIXED DATE OF SUBSIDIES
   var TODAY = new Date();
   var SUBSIDIES = undefined;
+  var PEOPLE = 0;
+
+  instance.setPeople = function(numberOfPeople) {
+    PEOPLE = numberOfPeople;
+  };
 
   function init(){
     instance.adjustSubsidies(new Date());
@@ -16,7 +21,7 @@ var sunCalculator = function(){
   instance.calculateKWHYearForKWPForState = function(KWP, state){
     var KWHperKWP = undefined;
     if (KWP && state) {
-      KWHperKWP = getStateKWHData(state) ? formatFloat((getStateKWHData(state) * KWP), 3) : undefined;
+      KWHperKWP = getStateKWHData(state) ? formatFloat((getStateKWHData(state) * KWP) - (PEOPLE * KWH_PER_PERSON), 3) : undefined;
     }
     return KWHperKWP;
   };
