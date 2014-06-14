@@ -1,10 +1,10 @@
-describe('sunCalculator', function(){
+describe('sunCalculator', function () {
 
   var calculator;
 
-  describe('calculateKWP', function(){
+  describe('calculateKWP', function () {
 
-    beforeEach(function(){
+    beforeEach(function () {
       calculator = sunCalculator();
     });
 
@@ -27,7 +27,7 @@ describe('sunCalculator', function(){
 
   describe('calculateKWHYearForKWPForState', function () {
 
-    beforeEach(function(){
+    beforeEach(function () {
       calculator = sunCalculator();
     });
 
@@ -56,9 +56,9 @@ describe('sunCalculator', function(){
     });
   });
 
-  describe('calculateSubsidy', function(){
+  describe('calculateSubsidy', function () {
 
-    beforeEach(function(){
+    beforeEach(function () {
       calculator = sunCalculator();
     });
 
@@ -87,40 +87,40 @@ describe('sunCalculator', function(){
     });
   });
 
-  describe('adjustSubsidies', function(){
+  describe('adjustSubsidies', function () {
 
-    beforeEach(function(){
+    beforeEach(function () {
       calculator = sunCalculator();
     });
-    
-    it('should not adjust the subsidies for current month', function () {
-      var adjustedSubsidies = {'small'   : 13.01, 'medium'  : 12.34,'large'   : 11.01};
 
-      calculator.adjustSubsidies(new Date(2014,5,14), new Date(2014,5,14));
+    it('should not adjust the subsidies for current month', function () {
+      var adjustedSubsidies = {'small': 13.01, 'medium': 12.34, 'large': 11.01};
+
+      calculator.adjustSubsidies(new Date(2014, 5, 14), new Date(2014, 5, 14));
 
       expect(calculator.getSubsidies()).toEqual(adjustedSubsidies);
     });
 
     it('should adjust the subsidies for 2 months in future', function () {
-      var adjustedSubsidies = {'small'   : 12.75, 'medium'  : 12.09,'large'   : 10.79};
+      var adjustedSubsidies = {'small': 12.75, 'medium': 12.09, 'large': 10.79};
 
-      calculator.adjustSubsidies(new Date(2014,5,14), new Date(2014,7,14));
+      calculator.adjustSubsidies(new Date(2014, 5, 14), new Date(2014, 7, 14));
 
       expect(calculator.getSubsidies()).toEqual(adjustedSubsidies);
     });
 
     it('should adjust the subsidies for 9 months in future', function () {
-      var adjustedSubsidies = {'small'   : 11.88, 'medium'  : 11.27,'large'   : 10.06};
+      var adjustedSubsidies = {'small': 11.88, 'medium': 11.27, 'large': 10.06};
 
-      calculator.adjustSubsidies(new Date(2014,5,14), new Date(2015,2,14));
+      calculator.adjustSubsidies(new Date(2014, 5, 14), new Date(2015, 2, 14));
 
       expect(calculator.getSubsidies()).toEqual(adjustedSubsidies);
     });
   });
 
-  describe('adjustForOwnEnergyConsumption', function(){
+  describe('adjustForOwnEnergyConsumption', function () {
 
-    beforeEach(function(){
+    beforeEach(function () {
       calculator = sunCalculator();
     });
 
@@ -131,9 +131,9 @@ describe('sunCalculator', function(){
     });
   });
 
-  describe('calculateAcquisitionCosts', function(){
+  describe('calculateAcquisitionCosts', function () {
 
-    beforeEach(function(){
+    beforeEach(function () {
       calculator = sunCalculator();
     });
 
@@ -159,16 +159,25 @@ describe('sunCalculator', function(){
   });
 
   describe('calculateAmortization()', function () {
+    beforeEach(function () {
+      calculator = sunCalculator();
+    });
+
     it('should return object including all needed data', function () {
       expect(calculator.calculateAmortization(90000.00, 5762.14)).toEqual(16);
     });
   });
 
   describe('calculateSolarCap()', function () {
+    beforeEach(function () {
+      calculator = sunCalculator();
+    });
+
     it('should return object including all needed data (4 persons)', function () {
       var returnObject = {
         yearlySubsidy: 5762.14,
         acquisitionCosts: 90000.00,
+        CO2Savings: 43762.87,
         amortizationInYears: 16,
         error: undefined
       };
@@ -180,6 +189,7 @@ describe('sunCalculator', function(){
       var returnObject = {
         yearlySubsidy: 7071.1,
         acquisitionCosts: 90000.00,
+        CO2Savings: 43762.87,
         amortizationInYears: 13,
         error: undefined
       };
@@ -188,9 +198,17 @@ describe('sunCalculator', function(){
     });
 
     it('should return object with error if sqm is missing', function () {
-      var returnObject = {error: 'argument missing'};
-
       expect(calculator.calculateSolarCap(undefined, 'Baden-Württemberg', 4, 'HOME').error).toEqual('argument missing');
+    });
+  });
+
+  describe('calculateCO2Savings', function () {
+    beforeEach(function () {
+      calculator = sunCalculator();
+    });
+
+    it('should save 7178.83 KG CO2 per year for a 10 KWP plant in Bavaria', function () {
+      expect(calculator.calculateCO2Savings(10, 'Bavaria')).toEqual(7178.83);
     });
   });
 });
