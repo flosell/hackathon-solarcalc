@@ -4,7 +4,7 @@ solarApp.controller('SearchCtrl', [
   '$scope',
   function ($scope) {
     $scope.parameter = {
-      type: 'house',
+      type: 'HOME',
       residents: 1
     };
 
@@ -15,8 +15,11 @@ solarApp.controller('SearchCtrl', [
 
     $scope.doSearch = function () {
       search($scope.address)
-      $scope.$parent.subsidy = "blubb"
     }
+
+    $scope.$watch("parameter",function(parameter) {
+            $scope.$parent.inputData.kind = parameter.type;
+    },true);
   }
 ]);
 
@@ -35,10 +38,9 @@ solarApp.controller('MapCtrl', [
 
         $scope.$parent.inputData.selectedArea = data.selectedArea;
         $scope.$parent.inputData.selectedState = data.selectedState;
+    });
 
 
-
-    })
   }
 ]);
 
@@ -63,7 +65,7 @@ solarApp.controller('CalcCtrl', [
     $scope.acquisitionCosts = ""
 
     $scope.$watch("inputData",function(data) {
-
+        debugger
         var calculator = sunCalculator();
 
         var calculationResult = calculator.calculateSolarCap(data.selectedArea, data.selectedState, data.residents, data.kind)
@@ -106,6 +108,5 @@ solarApp.directive('radio', function ($timeout) {
     }
   }
 });
-
 
 

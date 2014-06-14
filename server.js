@@ -14,10 +14,10 @@ app.get('/', function(req, res) {
 app.get('/api',function(req,res){
     var area = req.query.area,
         state = req.query.state,
-        persons = req.query.persons,
+        residents = req.query.residents,
         kind = req.query.kind
 
-    var result = calculator().calculateSolarCap(area, state, persons, kind);
+    var result = calculator().calculateSolarCap(area, state, residents, kind);
 
     res.json(result);
 })

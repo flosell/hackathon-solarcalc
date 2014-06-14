@@ -148,5 +148,5 @@ var sunCalculator = function () {
   init();
   return instance;
 };
-
+var module = module || {};
 module.exports = sunCalculator;
