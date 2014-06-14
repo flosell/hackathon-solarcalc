@@ -4,6 +4,9 @@
   "description": "Startupbootcamp Hackathon 2014 App",
   "main": "server.js",
   "author": "TBD",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "express": "4.4.1",
     "underscore": "1.6.0",
