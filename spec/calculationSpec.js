@@ -162,10 +162,17 @@ describe('sunCalculator', function(){
     it('should return object including all needed data', function () {
       var returnObject = {
         yearlySubsidy: 5762.14,
-        acquisitionCosts: 90000
+        acquisitionCosts: 90000,
+        error: undefined
       };
 
       expect(calculator.calculateSolarCap(400, 'Baden-Württemberg', 4, 'HOME')).toEqual(returnObject);
+    });
+
+    it('should return object with error if sqm is missing', function () {
+      var returnObject = {error: 'argument missing'};
+
+      expect(calculator.calculateSolarCap(undefined, 'Baden-Württemberg', 4, 'HOME').error).toEqual('argument missing');
     });
   });
 });
