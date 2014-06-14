@@ -5,3 +5,5 @@ function extend(B, A) {
     B.prototype = new I();
     B.prototype.constructor = B;
 }
+
+var COLOR = "#2dcff1"

@@ -2,8 +2,8 @@
 var displayArea = function(map,coords) {
     var polygon = new nokia.maps.map.Polygon(coords,
       {
-          pen: { strokeColor: "#000", lineWidth: 1 },
-          brush: { color: "#2C2A" }
+          pen: { strokeColor: COLOR, lineWidth: 1 },
+          brush: { color: COLOR }
       }
     )
     // Transparent green polygon with black border

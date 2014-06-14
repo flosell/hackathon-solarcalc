@@ -120,8 +120,8 @@ var initMarkers = function(map) {
         markerPolyline = new MarkerPolyline(
             coords,
             {
-                polyline: { pen: { strokeColor: "#00F8", lineWidth: 4 } },
-                marker: { brush: { color: "#1080dd" } }
+                polyline: { pen: { strokeColor: COLOR, lineWidth: 4 } },
+                marker: { brush: { color: COLOR } }
             }
         );
 
