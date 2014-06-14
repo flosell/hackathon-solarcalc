@@ -109,7 +109,20 @@ solarApp.controller('SearchCtrl', [
     }
 
     $scope.doSearch = function () {
-      search($scope.address)
+      search($scope.address);
+    }
+
+    $scope.setAddress = function(addr){
+       debugger
+       $scope.address = addr;
+    }
+
+    $scope.doRecommend = function() {
+      recommend($scope.address,function(recommendations) {
+          $scope.$apply(function() {
+            $scope.recommendations = recommendations;
+          });
+      });
     }
 
     $scope.$watch("parameter",function(parameter) {
