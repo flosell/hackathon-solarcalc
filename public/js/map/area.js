@@ -20,6 +20,5 @@ var areaInSquareMeters = function(coords) {
         c = coords[2];
     var xlength = a.distance(b);
     var ylength = b.distance(c);
-    debugger
     return xlength * ylength;
 }
