@@ -4,11 +4,15 @@ nokia.Settings.set("app_code", "cLUJSYAcqBDoP3OM1n-Kyw");
 window.onload = function() {
 
     var map = initializeMap();
-    goToLoction(map);
+    initializeWithGPSLocation(map);
     initMarkers(map);
 
 
-
+    window.search = function(a) {
+        searchAddress(a,function(coords) {
+            zoomTo(map,coords);
+        });
+    }
 
 
 }
