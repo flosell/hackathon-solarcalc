@@ -14,8 +14,9 @@ solarApp.controller('CalcCtrl', [
       selectedArea: 0,
       selectedState: "Berlin",
       kind: "HOME",
-      residents: 1
-    };
+      residents: 1,
+      withBattery: false
+    }
 
     $scope.recommendations = [];
 
@@ -24,13 +25,14 @@ solarApp.controller('CalcCtrl', [
 
     $scope.$watch("inputData",function(data) {
       var calculator = sunCalculator();
-
+      calculator.setBattery(data.withBattery)
       var calculationResult = calculator.calculateSolarCap(data.selectedArea, data.selectedState, data.residents, data.kind)
 
       $scope.subsidy = calculationResult.yearlySubsidy;
       $scope.acquisitionCosts = calculationResult.acquisitionCosts;
       $scope.amortizationInYears = calculationResult.amortizationInYears;
       $scope.generateChartDate();
+      $scope.savingFromBattery = calculationResult.savingFromBattery;
 
     },true);
 

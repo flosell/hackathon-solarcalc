@@ -105,8 +105,10 @@ MarkerPolyline.prototype.remove = function (coord) {
 };
 
 MarkerPolyline.prototype.reachedFirstMarkerAgain = function(currentCoord) {
-    var distance = this.orderedCoords[0].distance(currentCoord)
-    return distance < 2;
+    return this.orderedCoords.length === 4;
+}
+MarkerPolyline.prototype.wantMoreMarkers = function(currentCoord) {
+    return this.orderedCoords.length < 4;
 }
 
 var initMarkers = function(map,areaUpdatedCallback) {
@@ -137,6 +139,11 @@ var initMarkers = function(map,areaUpdatedCallback) {
         if (!polylineInitialized()) {
             initializePolyline(map,coord);
         }else {
+            if (markerPolyline.wantMoreMarkers()) {
+                markerPolyline.add(coord);
+                addedCoords.push(coord);
+            }
+
             if (markerPolyline.reachedFirstMarkerAgain(coord)) {
                 var coords = markerPolyline.orderedCoords;
                 displayArea(map,coords);
@@ -146,9 +153,6 @@ var initMarkers = function(map,areaUpdatedCallback) {
                         selectedState: state,
                     });
                 });
-            }else {
-                markerPolyline.add(coord);
-                addedCoords.push(coord);
             }
     	}
     });

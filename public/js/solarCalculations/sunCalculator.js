@@ -1,15 +1,15 @@
 var sunCalculator = function () {
   var PEAK_DATA = {
-    'Baden-Württemberg': 1041.973,
+    'Baden-Wuerttemberg': 1041.973,
     'Bavaria': 1025.547,
-    'Thüringen': 998.547,
-    'Sachsen-Anhalt': 988.167,
+    'Thuringia': 998.547,
+    'Saxony-Anhalt': 988.167,
     'Saarland': 998.113,
-    'Hessen': 954.843,
+    'Hesse': 954.843,
     'Saxony': 939.340,
-    'Rheinland-Pfalz': 974.740,
-    'Nordrhein-Westfalen': 917.513,
-    'Niedersachsen': 925.137,
+    'Rhineland-Palatinate': 974.740,
+    'North Rhine-Westphalia': 917.513,
+    'Lower Saxony': 925.137,
     'Brandenburg': 895.697,
     'Hamburg': 856.610,
     'Schleswig-Holstein': 880.323,
@@ -34,12 +34,24 @@ var sunCalculator = function () {
 
   var EXTRA_SUBSIDY_IN_CENT = 13;
 
+  var SAVED_ENERGY_PER_PERSON_PER_DAY_KWH = 1.1;
+
+  var CURRENT_ENERGY_PRICE_CENT = 26;
+
+//   SAVED_ENERGY_PER_PERSON_PER_DAY_KWH * PERSONS * CURRENT_ENERGY_PRICE_EURO * 365 --> EURO pro Jahr
+
   var instance = {};
 
   //  FIXED DATE OF SUBSIDIES
   var TODAY = new Date();
   var SUBSIDIES = undefined;
   var PEOPLE = 0;
+
+  instance.batteryToggle = false;
+
+  instance.setBattery = function(boolean){
+    instance.batteryToggle = boolean;
+  };
 
   instance.setPeople = function (numberOfPeople) {
     PEOPLE = numberOfPeople;
@@ -53,20 +65,6 @@ var sunCalculator = function () {
     return sqm ? formatFloat(sqm * 0.15, 5) : undefined;
   };
 
-//  instance.calculateKWHYearForKWPForState = function (KWP, state) {
-//    var KWHperKWP = undefined;
-//    if (KWP && state) {
-//
-//      KWHperKWP = getStateKWHData(state) ? formatFloat((getStateKWHData(state) * KWP) - (PEOPLE * KWH_PER_PERSON), 3) : undefined;
-////   +smallScale:   ((KWP * KWHstate) - (numberPerson * 1000) - 500) * smallScale
-////   +midScale:     (KWP * KWHstate) * mediumScale
-////  + largeScale:   (KWP * KWHstate) * largeScale
-//// +      ALL TOGETHER:
-//    }
-//    return KWHperKWP;
-//  };
-
-
   function calculateKWHYearForKWPForStateSmall(KWP, state) {
     var KWHperKWP = undefined;
     if (KWP && state) {
@@ -74,6 +72,24 @@ var sunCalculator = function () {
         KWHperKWP = formatFloat(((KWP * getStateKWHData(state)) - (PEOPLE * 1000) - 500));
       }
       return KWHperKWP;
+    }
+  }
+
+  function calculateRevenueFromBattery() {
+    if (instance.batteryToggle) {
+      return formatFloat((SAVED_ENERGY_PER_PERSON_PER_DAY_KWH * PEOPLE * (CURRENT_ENERGY_PRICE_CENT - EXTRA_SUBSIDY_IN_CENT) * 365) / 100, 2);
+    }
+  }
+
+  function calculateAdditionalAcquisitionCosts(acquisitionCost) {
+    if (instance.batteryToggle) {
+      if (PEOPLE <= 3) {
+        return acquisitionCost + 10000;
+      } else {
+        return acquisitionCost + 14000;
+      }
+    } else {
+      return acquisitionCost;
     }
   }
 
@@ -119,7 +135,9 @@ var sunCalculator = function () {
   }
 
   instance.calculateSubsidy = function (KWP, state, sum) {
-    if (sum === 0) {sum = calculateExtraSubsidy(KWP)}
+    if (sum === 0) {
+      sum = calculateExtraSubsidy(KWP)
+    }
 
     if (KWP <= 10) {
       var midSumSmall = calculateKWHYearForKWPForStateSmall(KWP, state) * SUBSIDIES['small'] + sum;
@@ -151,7 +169,8 @@ var sunCalculator = function () {
       var actualKWP = instance.calculateKWP(sqm);
 
       returnObject.yearlySubsidy = instance.calculateSubsidy(actualKWP, state, 0);
-      returnObject.acquisitionCosts = instance.calculateAcquisitionCosts(actualKWP, kind);
+      returnObject.savingFromBattery = calculateRevenueFromBattery();
+      returnObject.acquisitionCosts = calculateAdditionalAcquisitionCosts(instance.calculateAcquisitionCosts(actualKWP, kind));
       returnObject.amortizationInYears = instance.calculateAmortization(returnObject.acquisitionCosts,
         returnObject.yearlySubsidy);
       returnObject.CO2Savings = instance.calculateCO2Savings(actualKWP, state);

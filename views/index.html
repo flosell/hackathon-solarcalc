@@ -52,10 +52,10 @@
               <label>Type:</label>
               <div class="btn-group btn-group-justified type-picker">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-white" ng-model="inputData.type" radio="HOME"><i class="fa fa-home fa-2x"></i><br>House</button>
+                  <button type="button" class="btn btn-white" ng-model="inputData.kind" radio="HOME"><i class="fa fa-home fa-2x"></i><br>House</button>
                 </div>
                 <div class="btn-group">
-                  <button type="button" class="btn btn-white" ng-model="inputData.type" radio="FIELD"><i class="fa fa-th-large fa-2x"></i><br>Field</button>
+                  <button type="button" class="btn btn-white" ng-model="inputData.kind" radio="FIELD"><i class="fa fa-th-large fa-2x"></i><br>Field</button>
                 </div>
               </div>
             </div>
@@ -70,25 +70,34 @@
                 <i class="fa fa-child fa-3x rating-item" ng-class="{'active': inputData.residents >= 4}" ng-click="setRatingValue(4)"></i>
                 <i class="fa fa-child fa-3x rating-item" ng-class="{'active': inputData.residents == 5}" ng-click="setRatingValue(5)"></i>
               </div>
+              <div>
+                  Calculate with battery? <input type="checkbox" ng-model="inputData.withBattery">
+              </div>
             </div>
           </div>
           <div class="row">
-            <div class="col-xs-4">
+            <div class="col-xs-3">
               <div class="result-item">
                 <strong>Yearly Subsidy</strong><br>
                 {{ subsidy | currency : ""}} EUR
               </div>
             </div>
-            <div class="col-xs-4">
+            <div class="col-xs-3">
               <div class="result-item">
                 <strong>Acquisition Cost</strong><br>
                 {{ acquisitionCosts | currency: ""}} EUR
               </div>
             </div>
-            <div class="col-xs-4">
+            <div class="col-xs-3">
               <div class="result-item">
                 <strong>Amortization in years</strong><br>
                 {{amortizationInYears}}
+              </div>
+            </div>
+            <div class="col-xs-3" ng-if="inputData.withBattery">
+              <div class="result-item">
+                <strong>Saving from Battery</strong><br>
+                {{savingFromBattery}}
               </div>
             </div>
           </div>
