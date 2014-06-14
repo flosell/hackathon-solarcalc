@@ -21,12 +21,12 @@
   <body ng-app="solarcap-app">
 
   <div class="container-fluid full-height">
-    <div class="row full-height" ng-controller="CalcCtrl">
+    <div class="row full-height">
       <div class="col-xs-12 col-sm-8 full-height">
         <div class="full-height" id="mapContainer" ng-controller="MapCtrl"></div>
       </div>
       <div class="col-xs-12 col-sm-4 panel-right full-height">
-        <form class="row-padding" role="form" ng-controller="SearchCtrl" ng-submit="doSearch()">
+        <form class="row-padding" role="form" ng-controller="CalcCtrl" ng-submit="doSearch()">
           <div class="row">
             <div class="col-xs-8">
               <!--<label for="address">Address:</label>-->
@@ -48,10 +48,10 @@
               <label>Type:</label>
               <div class="btn-group btn-group-justified type-picker">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-white" ng-model="parameter.type" radio="HOME"><i class="fa fa-home fa-2x"></i><br>House</button>
+                  <button type="button" class="btn btn-white" ng-model="inputData.type" radio="HOME"><i class="fa fa-home fa-2x"></i><br>House</button>
                 </div>
                 <div class="btn-group">
-                  <button type="button" class="btn btn-white" ng-model="parameter.type" radio="FIELD"><i class="fa fa-th-large fa-2x"></i><br>Field</button>
+                  <button type="button" class="btn btn-white" ng-model="inputData.type" radio="FIELD"><i class="fa fa-th-large fa-2x"></i><br>Field</button>
                 </div>
               </div>
             </div>
@@ -60,11 +60,11 @@
             <div class="col-xs-8">
               <label>Residents:</label>
               <div class="rating-list">
-                <i class="fa fa-child fa-3x rating-item" ng-class="{'active': parameter.residents >= 1}" ng-click="setRatingValue(1)"></i>
-                <i class="fa fa-child fa-3x rating-item" ng-class="{'active': parameter.residents >= 2}" ng-click="setRatingValue(2)"></i>
-                <i class="fa fa-child fa-3x rating-item" ng-class="{'active': parameter.residents >= 3}" ng-click="setRatingValue(3)"></i>
-                <i class="fa fa-child fa-3x rating-item" ng-class="{'active': parameter.residents >= 4}" ng-click="setRatingValue(4)"></i>
-                <i class="fa fa-child fa-3x rating-item" ng-class="{'active': parameter.residents == 5}" ng-click="setRatingValue(5)"></i>
+                <i class="fa fa-child fa-3x rating-item" ng-class="{'active': inputData.residents >= 1}" ng-click="setRatingValue(1)"></i>
+                <i class="fa fa-child fa-3x rating-item" ng-class="{'active': inputData.residents >= 2}" ng-click="setRatingValue(2)"></i>
+                <i class="fa fa-child fa-3x rating-item" ng-class="{'active': inputData.residents >= 3}" ng-click="setRatingValue(3)"></i>
+                <i class="fa fa-child fa-3x rating-item" ng-class="{'active': inputData.residents >= 4}" ng-click="setRatingValue(4)"></i>
+                <i class="fa fa-child fa-3x rating-item" ng-class="{'active': inputData.residents == 5}" ng-click="setRatingValue(5)"></i>
               </div>
             </div>
           </div>

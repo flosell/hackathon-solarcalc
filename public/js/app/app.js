@@ -4,13 +4,36 @@ var solarApp = angular.module('solarcap-app', [
   'googlechart'
 ])
 
-solarApp.controller('SearchCtrl', [
+solarApp.controller('CalcCtrl', [
+  '$rootScope',
   '$scope',
-  function ($scope) {
-    $scope.parameter = {
-      type: 'HOME',
-      residents: 3
-    };
+  function ($rootScope, $scope) {
+
+    $scope.inputData = {
+      selectedArea: 0,
+      selectedState: "Berlin",
+      kind: "HOME",
+      residents: 1
+    }
+
+    $scope.subsidy = ""
+    $scope.acquisitionCosts = ""
+
+    $scope.$watch("inputData",function(data) {
+      var calculator = sunCalculator();
+
+      var calculationResult = calculator.calculateSolarCap(data.selectedArea, data.selectedState, data.residents, data.kind)
+
+      $scope.subsidy = calculationResult.yearlySubsidy;
+      $scope.acquisitionCosts = calculationResult.acquisitionCosts;
+      $scope.amortizationInYears = calculationResult.amortizationInYears;
+
+    },true);
+
+    var mapWatcher = $rootScope.$on('areaSelected', function(event, data){
+      $scope.inputData.selectedArea = data.selectedArea;
+      $scope.inputData.selectedState = data.selectedState;
+    });
 
     $scope.chartObject = {
       "type": "AreaChart",
@@ -79,24 +102,20 @@ solarApp.controller('SearchCtrl', [
               "v": (i*3) + ':00'
             },
             {
-              "v": $scope.parameter.residents * consumption[i]
+              "v": $scope.inputData.residents * consumption[i]
             },
             {
               "v": output[i] * 0.15 // * qm
             }
           ]
         });
-
-        console.log($scope.parameter.residents * consumption[i]);
-        console.log(output[i]);
       }
     }
 
     $scope.generateChartDate();
 
     $scope.setRatingValue = function(n){
-      $scope.parameter.residents = n;
-      $scope.$parent.inputData.residents = n;
+      $scope.inputData.residents = n;
     }
 
     $scope.doSearch = function () {
@@ -115,62 +134,23 @@ solarApp.controller('SearchCtrl', [
           });
       });
     }
-
-    $scope.$watch("parameter",function(parameter) {
-        $scope.$parent.inputData.kind = parameter.type;
-    },true);
   }
 ]);
 
 solarApp.controller('MapCtrl', [
+  '$rootScope',
   '$scope',
-  function ($scope) {
+  function ($rootScope, $scope) {
 
     initMap(function(data) {
         $scope.$apply(function(){
             $scope.selectedArea = data
+            $rootScope.$broadcast('areaSelected', data);
         })
     });
-
-
-
-    $scope.$watch("selectedArea",function(data) {
-        if (data === undefined) return;
-
-        $scope.$parent.inputData.selectedArea = data.selectedArea;
-        $scope.$parent.inputData.selectedState = data.selectedState;
-    });
-
-
   }
 ]);
 
-solarApp.controller('CalcCtrl', [
-  '$scope',
-  function ($scope) {
-    $scope.inputData = {
-        selectedArea: 0,
-        selectedState: "Berlin",
-        kind: "HOME",
-        residents: 1
-    }
-
-    $scope.subsidy = ""
-    $scope.acquisitionCosts = ""
-
-    $scope.$watch("inputData",function(data) {
-        var calculator = sunCalculator();
-
-        var calculationResult = calculator.calculateSolarCap(data.selectedArea, data.selectedState, data.residents, data.kind)
-
-        $scope.subsidy = calculationResult.yearlySubsidy;
-        $scope.acquisitionCosts = calculationResult.acquisitionCosts;
-        $scope.amortizationInYears = calculationResult.amortizationInYears;
-
-    },true);
-
-  }
-]);
 
 solarApp.directive('radio', function ($timeout) {
   return {
