@@ -24,16 +24,21 @@ solarApp.controller('MapCtrl', [
 
     initMap(function(data) {
         $scope.$apply(function(){
-            $scope.selectedArea = data.selectedArea;
-            console.log('DEBUG: ', sunCalculator());
-            console.log('updatedMap: ',data);
-          var calculator = sunCalculator();
-          var sqm = data.selectedArea;
-          var state = data.selectedState;
-          var KWP = calculator.calculateKWP(sqm);
-          var subsidy = calculator.calculateSubsidy(KWP, state, 0);
-          console.log('DEBUG: ',subsidy);
+            $scope.selectedArea = data
         })
+    })
+
+    $scope.$watch("selectedArea",function(data) {
+        if (data === undefined) return;
+
+        console.log('DEBUG: ', sunCalculator());
+        console.log('updatedMap: ',data);
+        var calculator = sunCalculator();
+        var sqm = data.selectedArea;
+        var state = data.selectedState;
+        var KWP = calculator.calculateKWP(sqm);
+        var subsidy = calculator.calculateSubsidy(KWP, state, 0);
+        console.log('DEBUG: ',subsidy);
     })
   }
 ]);
