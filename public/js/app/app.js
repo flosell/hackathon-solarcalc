@@ -16,7 +16,14 @@ solarApp.controller('MapCtrl', [
     initMap(function(data) {
         $scope.$apply(function(){
             $scope.selectedArea = data.selectedArea;
-            console.log('updatedMap: ',data)
+            console.log('DEBUG: ', sunCalculator());
+            console.log('updatedMap: ',data);
+          var calculator = sunCalculator();
+          var sqm = data.selectedArea;
+          var state = data.selectedState;
+          var KWP = calculator.calculateKWP(sqm);
+          var subsidy = calculator.calculateSubsidy(KWP, state, 0);
+          console.log('DEBUG: ',subsidy);
         })
     })
   }
