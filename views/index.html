@@ -29,12 +29,12 @@
         <form class="row-padding" role="form" ng-controller="SearchCtrl" ng-submit="doSearch()">
           <div class="row">
             <div class="col-xs-8">
-              <label for="address">Address:</label>
+              <!--<label for="address">Address:</label>-->
               <div class="input-group">
-                <input type="text" class="form-control" ng-model="address">
-                  <span class="input-group-btn">
-                    <button class="btn btn-info btn-blue" type="button" name="address" id="address" ng-click="doSearch()">&nbsp;&nbsp;&nbsp;<i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;</button>
-                  </span>
+                <input type="text" class="form-control" ng-model="address" placeholder="Where do you live mate?">
+                <span class="input-group-btn">
+                  <button class="btn btn-info btn-blue" type="button" name="address" id="address" ng-click="doSearch()">&nbsp;&nbsp;&nbsp;<i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;</button>
+                </span>
               </div>
             </div>
           </div>

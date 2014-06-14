@@ -70,29 +70,34 @@ solarApp.controller('SearchCtrl', [
 
     $scope.generateChartDate = function(){
       var consumption = [
-        0.131, 0.113, 0.090, 0.083,
-        0.064, 0.064, 0.071, 0.079,
-        0.094, 0.124, 0.188, 0.203, 0.203
+        0.033, 0.019, 0.016, 0.023,
+        0.054, 0.052, 0.061, 0.056,
+        0.047, 0.056, 0.078, 0.051
       ];
 
+      var output = [ 
+        0, 0, 0, 0,
+        0.1, 0.65, 0.86, 0.79,
+        0.45, 0, 0, 0
+      ];
 
-      // 500 grundlast + n*1000
-
-
-      for(var i = 0; i <= 12; i++){
+      for(var i = 0; i < 12; i++){
         $scope.chartObject.data.rows.push({
           "c": [
             {
               "v": (i*2) + ':00'
             },
             {
-              "v": consumption[i]
+              "v": $scope.parameter.residents * consumption[i]
             },
             {
-              "v": 1
+              "v": output[i]
             }
           ]
         });
+
+        console.log($scope.parameter.residents * consumption[i]);
+        console.log(output[i]);
       }
     }
 
