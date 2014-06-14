@@ -10,6 +10,7 @@ solarApp.controller('SearchCtrl', [
 
     $scope.setRatingValue = function(n){
       $scope.parameter.residents = n;
+      $scope.$parent.inputData.residents = n;
     }
 
     $scope.doSearch = function () {
