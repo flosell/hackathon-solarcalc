@@ -28,6 +28,8 @@ solarApp.controller('CalcCtrl', [
       $scope.subsidy = calculationResult.yearlySubsidy;
       $scope.acquisitionCosts = calculationResult.acquisitionCosts;
       $scope.amortizationInYears = calculationResult.amortizationInYears;
+      $scope.savingFromBattery = calculationResult.savingFromBattery;
+
 
     },true);
 
