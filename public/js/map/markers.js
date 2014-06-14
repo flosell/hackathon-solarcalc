@@ -152,4 +152,17 @@ var initMarkers = function(map,areaUpdatedCallback) {
             }
     	}
     });
+
+    window.resetMarkers = function() {
+        var i = addedCoords.length;
+
+        	while (i--) {
+        		markerPolyline.remove(addedCoords[i]);
+        	}
+
+        addedCoords = [];
+
+        markerPolyline = null;
+        map.objects.clear();
+    }
 }

@@ -8,7 +8,7 @@ solarApp.controller('SearchCtrl', [
   '$scope',
   function ($scope) {
     $scope.parameter = {
-      type: 'house',
+      type: 'HOME',
       residents: 1
     };
 
@@ -100,11 +100,16 @@ solarApp.controller('SearchCtrl', [
 
     $scope.setRatingValue = function(n){
       $scope.parameter.residents = n;
+      $scope.$parent.inputData.residents = n;
     }
 
     $scope.doSearch = function () {
       search($scope.address)
     }
+
+    $scope.$watch("parameter",function(parameter) {
+        $scope.$parent.inputData.kind = parameter.type;
+    },true);
   }
 ]);
 
@@ -123,15 +128,38 @@ solarApp.controller('MapCtrl', [
     $scope.$watch("selectedArea",function(data) {
         if (data === undefined) return;
 
-        console.log('DEBUG: ', sunCalculator());
-        console.log('updatedMap: ',data);
+        $scope.$parent.inputData.selectedArea = data.selectedArea;
+        $scope.$parent.inputData.selectedState = data.selectedState;
+    });
+
+
+  }
+]);
+
+solarApp.controller('CalcCtrl', [
+  '$scope',
+  function ($scope) {
+    $scope.inputData = {
+        selectedArea: 0,
+        selectedState: "Berlin",
+        kind: "HOME",
+        residents: 1
+    }
+
+    $scope.subsidy = ""
+    $scope.acquisitionCosts = ""
+
+    $scope.$watch("inputData",function(data) {
         var calculator = sunCalculator();
-        var sqm = data.selectedArea;
-        var state = data.selectedState;
-        var KWP = calculator.calculateKWP(sqm);
-        var subsidy = calculator.calculateSubsidy(KWP, state, 0);
-        console.log('DEBUG: ',subsidy);
-    })
+
+        var calculationResult = calculator.calculateSolarCap(data.selectedArea, data.selectedState, data.residents, data.kind)
+
+        $scope.subsidy = calculationResult.yearlySubsidy;
+        $scope.acquisitionCosts = calculationResult.acquisitionCosts;
+        $scope.amortizationInYears = calculationResult.amortizationInYears;
+
+    },true);
+
   }
 ]);
 
@@ -164,6 +192,5 @@ solarApp.directive('radio', function ($timeout) {
     }
   }
 });
-
 
 

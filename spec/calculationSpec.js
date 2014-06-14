@@ -48,7 +48,7 @@ describe('sunCalculator', function(){
     });
 
     it('should return 1878.680 for 2 KWP for Sachsen', function () {
-      expect(calculator.calculateKWHYearForKWPForState(2, 'Sachsen')).toEqual(1878.680);
+      expect(calculator.calculateKWHYearForKWPForState(2, 'Saxony')).toEqual(1878.680);
     });
 
     it('should return 20829.042 for 26 KWP for Bremen', function () {
@@ -83,7 +83,7 @@ describe('sunCalculator', function(){
     });
 
     it('should return 8835.43 Euro for 80 KWP in Sachsen', function () {
-      expect(calculator.calculateSubsidy(80, 'Sachsen', 0)).toBe(8836.37);
+      expect(calculator.calculateSubsidy(80, 'Saxony', 0)).toBe(8836.37);
     });
   });
 
@@ -116,5 +116,81 @@ describe('sunCalculator', function(){
 
       expect(calculator.getSubsidies()).toEqual(adjustedSubsidies);
     });
-  })
+  });
+
+  describe('adjustForOwnEnergyConsumption', function(){
+
+    beforeEach(function(){
+      calculator = sunCalculator();
+    });
+
+    it('should return 5762.14 Euro for 60 KWP in BW', function () {
+      calculator.setPeople(4);
+
+      expect(calculator.calculateSubsidy(60, 'Baden-Württemberg', 0)).toBe(5762.14);
+    });
+  });
+
+  describe('calculateAcquisitionCosts', function(){
+
+    beforeEach(function(){
+      calculator = sunCalculator();
+    });
+
+    it('should return undefined for no KWP', function () {
+      expect(calculator.calculateAcquisitionCosts(undefined)).toBe(undefined);
+    });
+
+    it('should return 1500.00 Euro for 1 KWP (HOME)', function () {
+      expect(calculator.calculateAcquisitionCosts(1, 'HOME')).toBe(1500.00);
+    });
+
+    it('should return 15000.00 Euro for 10 KWP (HOME)', function () {
+      expect(calculator.calculateAcquisitionCosts(10, 'HOME')).toBe(15000.00);
+    });
+
+    it('should return 1600.00 Euro for 1 KWP (FIELD)', function () {
+      expect(calculator.calculateAcquisitionCosts(1, 'FIELD')).toBe(1600.00);
+    });
+
+    it('should return 16000.00 Euro for 10 KWP (FIELD)', function () {
+      expect(calculator.calculateAcquisitionCosts(10, 'FIELD')).toBe(16000.00);
+    });
+  });
+
+  describe('calculateAmortization()', function () {
+    it('should return object including all needed data', function () {
+      expect(calculator.calculateAmortization(90000.00, 5762.14)).toEqual(16);
+    });
+  });
+
+  describe('calculateSolarCap()', function () {
+    it('should return object including all needed data (4 persons)', function () {
+      var returnObject = {
+        yearlySubsidy: 5762.14,
+        acquisitionCosts: 90000.00,
+        amortizationInYears: 16,
+        error: undefined
+      };
+
+      expect(calculator.calculateSolarCap(400, 'Baden-Württemberg', 4, 'HOME')).toEqual(returnObject);
+    });
+
+    it('should return object including all needed data (1 person)', function () {
+      var returnObject = {
+        yearlySubsidy: 7071.1,
+        acquisitionCosts: 90000.00,
+        amortizationInYears: 13,
+        error: undefined
+      };
+
+      expect(calculator.calculateSolarCap(400, 'Baden-Württemberg', 1, 'HOME')).toEqual(returnObject);
+    });
+
+    it('should return object with error if sqm is missing', function () {
+      var returnObject = {error: 'argument missing'};
+
+      expect(calculator.calculateSolarCap(undefined, 'Baden-Württemberg', 4, 'HOME').error).toEqual('argument missing');
+    });
+  });
 });
