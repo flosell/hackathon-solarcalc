@@ -16,7 +16,20 @@ var initializeMap=function() {
    )
 }
 
-var goToLoction = function(map) {
+var STANDARD_ZOOM_VISIBLE_RADIUS = 100
+
+var zoomTo = function(map,coords) {
+     accuracyCircle = new nokia.maps.map.Circle(coords, STANDARD_ZOOM_VISIBLE_RADIUS);
+
+     // Add the circle and marker to the map's object collection so they will be rendered onto the map.
+     //map.objects.addAll([ marker]);
+     /* This method zooms the map to ensure that the bounding box calculated from the size of the circle
+      * shape is visible in its entirety in map's viewport.
+      */
+     map.zoomTo(accuracyCircle.getBoundingBox(), false, "default");
+}
+
+var initializeWithGPSLocation = function(map) {
     /* The positioning manager is only available if the browser used supports
      * W3C geolocation API
      */
@@ -28,19 +41,7 @@ var goToLoction = function(map) {
             positioning.getCurrentPosition(
                 // If a position is provided by W3C geolocation API of the browser
                 function (position) {
-                    var coords = position.coords, // we retrieve the longitude/latitude from position
-                        marker = new nokia.maps.map.StandardMarker(coords), // creates a marker
-                        /* Create a circle map object  on the  geographical coordinates of
-                         * provided position with a radius in meters of the accuracy of the position
-                         */
-                        accuracyCircle = new nokia.maps.map.Circle(coords, coords.accuracy);
-
-                    // Add the circle and marker to the map's object collection so they will be rendered onto the map.
-                    //map.objects.addAll([ marker]);
-                    /* This method zooms the map to ensure that the bounding box calculated from the size of the circle
-                     * shape is visible in its entirety in map's viewport.
-                     */
-                    map.zoomTo(accuracyCircle.getBoundingBox(), false, "default");
+                    zoomTo(map,position.coords);
                 },
                 // Something went wrong we wee unable to retrieve the GPS location
                 function (error) {
