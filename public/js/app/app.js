@@ -15,8 +15,8 @@ solarApp.controller('MapCtrl', [
 
     initMap(function(data) {
         $scope.$apply(function(){
-            $scope.sqm = data.sqm;
-            console.log('sqm'+$scope.sqm)
+            $scope.selectedArea = data.selectedArea;
+            console.log('updatedMap: ',data)
         })
     })
   }

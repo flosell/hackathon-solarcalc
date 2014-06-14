@@ -140,11 +140,12 @@ var initMarkers = function(map,areaUpdatedCallback) {
             if (markerPolyline.reachedFirstMarkerAgain(coord)) {
                 var coords = markerPolyline.orderedCoords;
                 displayArea(map,coords);
-                areaUpdatedCallback({
-                    sqm:areaInSquareMeters(coords)
-                })
-//                alert("size: "+areaInSquareMeters(coords));
-//                stateForCoordinates(coords,function(state){alert("we are in "+state)})
+                stateForCoordinates(coords,function(state){
+                    areaUpdatedCallback({
+                        selectedArea:areaInSquareMeters(coords),
+                        selectedState: state,
+                    });
+                });
             }else {
                 markerPolyline.add(coord);
                 addedCoords.push(coord);
