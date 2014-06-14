@@ -35,7 +35,7 @@ window.onload = function() {
     					accuracyCircle = new nokia.maps.map.Circle(coords, coords.accuracy);
 
     				// Add the circle and marker to the map's object collection so they will be rendered onto the map.
-    				map.objects.addAll([accuracyCircle, marker]);
+    				map.objects.addAll([ marker]);
     				/* This method zooms the map to ensure that the bounding box calculated from the size of the circle
     				 * shape is visible in its entirety in map's viewport.
     				 */
