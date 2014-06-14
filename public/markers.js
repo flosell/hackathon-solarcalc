@@ -106,7 +106,7 @@ MarkerPolyline.prototype.remove = function (coord) {
 
 MarkerPolyline.prototype.reachedFirstMarkerAgain = function(currentCoord) {
     var distance = this.orderedCoords[0].distance(currentCoord)
-    return distance < 2;
+    return distance < 5;
 }
 
 var initMarkers = function(map) {
