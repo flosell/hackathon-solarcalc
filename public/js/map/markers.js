@@ -107,6 +107,9 @@ MarkerPolyline.prototype.remove = function (coord) {
 MarkerPolyline.prototype.reachedFirstMarkerAgain = function(currentCoord) {
     return this.orderedCoords.length === 4;
 }
+MarkerPolyline.prototype.wantMoreMarkers = function(currentCoord) {
+    return this.orderedCoords.length < 4;
+}
 
 var initMarkers = function(map,areaUpdatedCallback) {
     var markerPolyline = null;
@@ -136,8 +139,10 @@ var initMarkers = function(map,areaUpdatedCallback) {
         if (!polylineInitialized()) {
             initializePolyline(map,coord);
         }else {
-            markerPolyline.add(coord);
-            addedCoords.push(coord);
+            if (markerPolyline.wantMoreMarkers()) {
+                markerPolyline.add(coord);
+                addedCoords.push(coord);
+            }
 
             if (markerPolyline.reachedFirstMarkerAgain(coord)) {
                 var coords = markerPolyline.orderedCoords;
