@@ -141,12 +141,20 @@ describe('sunCalculator', function(){
       expect(calculator.calculateAcquisitionCosts(undefined)).toBe(undefined);
     });
 
-    it('should return 1300.00 Euro for 1 KWP', function () {
-      expect(calculator.calculateAcquisitionCosts(1)).toBe(1300.00);
+    it('should return 1500.00 Euro for 1 KWP (HOME)', function () {
+      expect(calculator.calculateAcquisitionCosts(1, 'HOME')).toBe(1500.00);
     });
 
-    it('should return 13000.00 Euro for 10 KWP', function () {
-      expect(calculator.calculateAcquisitionCosts(10)).toBe(13000.00);
+    it('should return 15000.00 Euro for 10 KWP (HOME)', function () {
+      expect(calculator.calculateAcquisitionCosts(10, 'HOME')).toBe(15000.00);
+    });
+
+    it('should return 1600.00 Euro for 1 KWP (FIELD)', function () {
+      expect(calculator.calculateAcquisitionCosts(1, 'FIELD')).toBe(1600.00);
+    });
+
+    it('should return 16000.00 Euro for 10 KWP (FIELD)', function () {
+      expect(calculator.calculateAcquisitionCosts(10, 'FIELD')).toBe(16000.00);
     });
   });
 });

@@ -35,8 +35,14 @@ var sunCalculator = function(){
     TODAY = newDate;
   };
 
-  instance.calculateAcquisitionCosts = function(KWP){
-    return KWP ? formatFloat((KWP * 1300), 2) : undefined;
+  instance.calculateAcquisitionCosts = function(KWP, kind){
+    if(KWP) {
+      return kind === 'HOME'
+        ? formatFloat((KWP * ACQUISITION_COST_PER_KWP_HOME), 2)
+        : formatFloat((KWP * ACQUISITION_COST_PER_KWP_FIELD), 2);
+    } else {
+      return undefined;
+    }
   };
 
   instance.calculateSubsidy = function(KWP, state, sum){
