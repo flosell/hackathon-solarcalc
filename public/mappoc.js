@@ -4,6 +4,7 @@ nokia.Settings.set("app_code", "cLUJSYAcqBDoP3OM1n-Kyw");
 window.onload = function() {
     var map = new nokia.maps.map.Display(
         document.getElementById("mapContainer"), {
+            baseMapType: nokia.maps.map.Display.SATELLITE,
             // Zoom level for the map
             zoomLevel: 10,
             // Map center coordinates
