@@ -27,6 +27,47 @@ body {
   color: #fff;
 }
 
+.type-picker {
+  .active {
+    background: @lightBlue;
+    color: #fff;
+  }
+
+  .active:hover {
+    background: @lightBlue;
+  }
+}
+
+.btn-white {
+  padding: 5px;
+  margin-bottom: 3px;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  -webkit-border-radius: @borderRadius;
+  border-radius: @borderRadius;
+  cursor: pointer;
+  box-shadow: 0 1px 0 rgba(0,0,0,.05);
+  -webkit-transition: background-color .22s,border-color .22s,box-shadow .22s;
+  transition: background-color .22s,border-color .22s,box-shadow .22s;
+  outline: none;
+
+  &:visited,
+  &:active,
+  &:link {
+    color: #000;
+  }
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+}
+
+.row-padding {
+  .row {
+    padding-bottom: 15px;
+  }
+}
+
 
 
 

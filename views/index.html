@@ -26,16 +26,29 @@
         <div class="full-height" id="mapContainer"></div>
       </div>
       <div class="col-xs-12 col-sm-5 panel-right full-height">
-        <form role="form" ng-controller="SearchCtrl">
+        <form class="row-padding" role="form" ng-controller="SearchCtrl">
 
           <div class="row">
-            <div class="col-xs-10">
+            <div class="col-xs-8">
               <label for="address">Address:</label>
               <div class="input-group">
                 <input type="text" class="form-control" ng-model="address">
                   <span class="input-group-btn">
                     <button class="btn btn-info btn-blue" type="button" name="address" id="address" ng-click="doSearch()">&nbsp;&nbsp;&nbsp;<i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;</button>
                   </span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-8">
+              <label>Type:</label>
+              <div class="btn-group btn-group-justified type-picker">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-white" ng-model="parameter.type" radio="house"><i class="fa fa-home fa-2x"></i><br>House</button>
+                </div>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-white" ng-model="parameter.type" radio="field"><i class="fa fa-th-large fa-2x"></i><br>Field</button>
+                </div>
               </div>
             </div>
           </div>
