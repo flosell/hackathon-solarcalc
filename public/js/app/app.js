@@ -82,7 +82,7 @@ solarApp.controller('SearchCtrl', [
               "v": $scope.parameter.residents * consumption[i]
             },
             {
-              "v": output[i]
+              "v": output[i] * 0.15 // * qm
             }
           ]
         });
