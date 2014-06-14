@@ -9,7 +9,7 @@ solarApp.controller('SearchCtrl', [
   function ($scope) {
     $scope.parameter = {
       type: 'HOME',
-      residents: 1
+      residents: 3
     };
 
     $scope.chartObject = {
@@ -69,23 +69,14 @@ solarApp.controller('SearchCtrl', [
 
 
     $scope.generateChartDate = function(){
-      var consumption = [
-        0.033, 0.019, 0.016, 0.023,
-        0.054, 0.052, 0.061, 0.056,
-        0.047, 0.056, 0.078, 0.051
-      ];
+      var consumption = [ 0.033, 0.017, 0.023, 0.056, 0.061, 0.052, 0.056, 0.061, 0.033 ];
+      var output = [0, 0, 0, 0.45, 0.86, 0.65, 0, 0, 0];
 
-      var output = [ 
-        0, 0, 0, 0,
-        0.1, 0.65, 0.86, 0.79,
-        0.45, 0, 0, 0
-      ];
-
-      for(var i = 0; i < 12; i++){
+      for(var i = 0; i <= 8; i++){
         $scope.chartObject.data.rows.push({
           "c": [
             {
-              "v": (i*2) + ':00'
+              "v": (i*3) + ':00'
             },
             {
               "v": $scope.parameter.residents * consumption[i]
