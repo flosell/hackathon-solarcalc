@@ -52,6 +52,18 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="col-xs-8">
+              <label>Residents:</label>
+              <div class="rating-list">
+                <i class="fa fa-child fa-3x rating-item" ng-class="{'active': parameter.residents >= 1}" ng-click="setRatingValue(1)"></i>
+                <i class="fa fa-child fa-3x rating-item" ng-class="{'active': parameter.residents >= 2}" ng-click="setRatingValue(2)"></i>
+                <i class="fa fa-child fa-3x rating-item" ng-class="{'active': parameter.residents >= 3}" ng-click="setRatingValue(3)"></i>
+                <i class="fa fa-child fa-3x rating-item" ng-class="{'active': parameter.residents >= 4}" ng-click="setRatingValue(4)"></i>
+                <i class="fa fa-child fa-3x rating-item" ng-class="{'active': parameter.residents == 5}" ng-click="setRatingValue(5)"></i>
+              </div>
+            </div>
+          </div>
 
 
         </form>

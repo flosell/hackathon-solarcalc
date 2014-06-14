@@ -3,6 +3,15 @@ var solarApp = angular.module('solarcap-app', []);
 solarApp.controller('SearchCtrl', [
   '$scope',
   function ($scope) {
+    $scope.parameter = {
+      type: 'house',
+      residents: 1
+    };
+
+    $scope.setRatingValue = function(n){
+      $scope.parameter.residents = n;
+    }
+
     $scope.doSearch = function () {
       search($scope.address)
     }
