@@ -82,7 +82,7 @@ solarApp.controller('CalcCtrl', [
         fontSize: 11,
         "displayExactValues": true,
         "vAxis": {
-          "title": "kw/h",
+          "title": "kwh",
           "gridlines": {
             "count": 10
           }
