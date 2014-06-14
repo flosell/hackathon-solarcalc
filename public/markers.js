@@ -154,6 +154,7 @@ var initMarkers = function(map) {
                 var coords = markerPolyline.orderedCoords;
                 displayArea(map,coords);
                 alert("size: "+areaInSquareMeters(coords));
+                stateForCoordinates(coords,function(state){alert("we are in "+state)})
             }
     	}
     });
