@@ -1,5 +1,9 @@
-/**
- * Author: Thomas Schiela
- * Date: 14.06.2014
- * Time: 14:34
- */
+var solarApp = angular.module('solarcap-app', []);
+
+solarApp.controller('SearchCtrl', [
+  '$scope',
+  function($scope){
+  }
+]);
+
+
