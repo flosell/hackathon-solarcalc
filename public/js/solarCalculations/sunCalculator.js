@@ -30,6 +30,8 @@ var sunCalculator = function () {
 
   var ADDITIONAL_SUBSIDY = 0;
 
+  var CO2_SAVINGS_IN_GRAMM = 700;
+
   var instance = {};
 
   //  FIXED DATE OF SUBSIDIES
@@ -55,6 +57,10 @@ var sunCalculator = function () {
       KWHperKWP = getStateKWHData(state) ? formatFloat((getStateKWHData(state) * KWP) - (PEOPLE * KWH_PER_PERSON), 3) : undefined;
     }
     return KWHperKWP;
+  };
+
+  instance.calculateCO2Savings = function (KWP, state) {
+    return getStateKWHData(state) ? formatGrammtoKG(getStateKWHData(state) * KWP * CO2_SAVINGS_IN_GRAMM) : undefined;
   };
 
   instance.getSubsidies = function () {
@@ -118,6 +124,7 @@ var sunCalculator = function () {
       returnObject.acquisitionCosts = instance.calculateAcquisitionCosts(actualKWP, kind);
       returnObject.amortizationInYears = instance.calculateAmortization(returnObject.acquisitionCosts,
         returnObject.yearlySubsidy);
+      returnObject.CO2Savings = instance.calculateCO2Savings(actualKWP, state);
     } else {
       returnObject.error = 'argument missing';
     }
@@ -142,6 +149,10 @@ var sunCalculator = function () {
 
   function formatCentToEuro(cent) {
     return formatFloat((cent / 100), 2);
+  }
+
+  function formatGrammtoKG(gramm) {
+    return formatFloat((gramm / 1000), 2);
   }
 
   function getStateKWHData(state) {

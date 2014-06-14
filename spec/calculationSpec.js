@@ -159,16 +159,25 @@ describe('sunCalculator', function(){
   });
 
   describe('calculateAmortization()', function () {
+    beforeEach(function(){
+      calculator = sunCalculator();
+    });
+
     it('should return object including all needed data', function () {
       expect(calculator.calculateAmortization(90000.00, 5762.14)).toEqual(16);
     });
   });
 
   describe('calculateSolarCap()', function () {
+    beforeEach(function(){
+      calculator = sunCalculator();
+    });
+    
     it('should return object including all needed data (4 persons)', function () {
       var returnObject = {
         yearlySubsidy: 5762.14,
         acquisitionCosts: 90000.00,
+        CO2Savings: 43762.87,
         amortizationInYears: 16,
         error: undefined
       };
@@ -180,6 +189,7 @@ describe('sunCalculator', function(){
       var returnObject = {
         yearlySubsidy: 7071.1,
         acquisitionCosts: 90000.00,
+        CO2Savings: 43762.87,
         amortizationInYears: 13,
         error: undefined
       };
@@ -188,9 +198,17 @@ describe('sunCalculator', function(){
     });
 
     it('should return object with error if sqm is missing', function () {
-      var returnObject = {error: 'argument missing'};
-
       expect(calculator.calculateSolarCap(undefined, 'Baden-Württemberg', 4, 'HOME').error).toEqual('argument missing');
+    });
+  });
+
+  describe('calculateCO2Savings', function () {
+    beforeEach(function(){
+      calculator = sunCalculator();
+    });
+    
+    it('should save 7178.83 KG CO2 per year for a 10 KWP plant in Bavaria', function () {
+      expect(calculator.calculateCO2Savings(10, 'Bavaria')).toEqual(7178.83);
     });
   });
 });
