@@ -1,6 +1,14 @@
 var sunCalculator = function(){
   var instance = {};
 
+//  FIXED DATE OF SUBSIDIES
+  var TODAY = new Date();
+  var SUBSIDIES = undefined;
+
+  function init(){
+    instance.adjustSubsidies(new Date());
+  }
+
   instance.calculateKWP = function(sqm){
     return sqm ? formatFloat(sqm * 0.15, 5) : undefined;
   };
@@ -13,13 +21,16 @@ var sunCalculator = function(){
     return KWHperKWP;
   };
 
-  instance.calculateSubsidy = function(KWP, state, sum){
-    var SUBSIDIES = {
-      'small'   : 13.01,
-      'medium'  : 12.34,
-      'large'   : 11.10
-    };
+  instance.getSubsidies = function (){
+    return SUBSIDIES;
+  };
 
+  instance.setDates = function(oldDate, newDate){
+    FIXED_DATE = oldDate;
+    TODAY = newDate;
+  };
+
+  instance.calculateSubsidy = function(KWP, state, sum){
     if(KWP <= 10) {
       var midSumSmall = instance.calculateKWHYearForKWPForState(KWP, state) * SUBSIDIES['small'] + sum;
       return formatCentToEuro(midSumSmall);
@@ -30,6 +41,31 @@ var sunCalculator = function(){
       var midSumMediumLarge = instance.calculateKWHYearForKWPForState(KWP - 40, state) * SUBSIDIES['large'] + sum;
       return instance.calculateSubsidy(40, state, midSumMediumLarge);
     }
+  };
+
+  function getMonthsDifference(fixedDate, today) {
+    var d1Y = fixedDate.getFullYear();
+    var d2Y = today.getFullYear();
+    var d1M = fixedDate.getMonth();
+    var d2M = today.getMonth();
+
+    return (d2M+12*d2Y)-(d1M+12*d1Y);
+  }
+
+  instance.adjustSubsidies = function(fixedDateInput, todayInput) {
+    var fixedDate = fixedDateInput ? fixedDateInput : FIXED_DATE;
+    var today = todayInput ? todayInput : TODAY;
+
+    var monthsDifference = getMonthsDifference(fixedDate, today);
+    var adjustedSubsidies = [];
+
+    for(var subsidy in BASE_SUBSIDIES) {
+      var multiplicationFactor = Math.pow(0.99, monthsDifference);
+      var adjustedSubsidy = BASE_SUBSIDIES[subsidy] * multiplicationFactor;
+      adjustedSubsidies.push(formatFloat(adjustedSubsidy, 2));
+    }
+
+    SUBSIDIES = {'small' : adjustedSubsidies[0], 'medium' : adjustedSubsidies[1], 'large' : adjustedSubsidies[2]};
   };
 
   function formatCentToEuro (cent) {
@@ -44,5 +80,6 @@ var sunCalculator = function(){
     return parseFloat(float.toFixed(decimalPoints));
   }
 
+  init();
   return instance;
 };

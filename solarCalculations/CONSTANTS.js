@@ -17,6 +17,10 @@ var PEAK_DATA = {
   'Berlin' : 730.910
 };
 
+var FIXED_DATE = new Date(2014,5,14);
+
+var BASE_SUBSIDIES = [13.01, 12.34, 11.01];
+
 
 
 

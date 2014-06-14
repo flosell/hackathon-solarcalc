@@ -2,11 +2,11 @@ describe('sunCalculator', function(){
 
   var calculator;
 
-  beforeEach(function(){
-    calculator = sunCalculator();
-  });
-
   describe('calculateKWP', function(){
+
+    beforeEach(function(){
+      calculator = sunCalculator();
+    });
 
     it('should return undefined for no input', function () {
       expect(calculator.calculateKWP(undefined)).toBeUndefined();
@@ -26,6 +26,11 @@ describe('sunCalculator', function(){
   });
 
   describe('calculateKWHYearForKWPForState', function () {
+
+    beforeEach(function(){
+      calculator = sunCalculator();
+    });
+
     it('should return undefined for undefined state', function () {
       expect(calculator.calculateKWHYearForKWPForState(1, undefined)).toEqual(undefined);
     });
@@ -53,6 +58,10 @@ describe('sunCalculator', function(){
 
   describe('calculateSubsidy', function(){
 
+    beforeEach(function(){
+      calculator = sunCalculator();
+    });
+
     it('should return 135.56 Euro for 1 KWP in Baden-Wuerttemberg', function () {
       expect(calculator.calculateSubsidy(1, 'Baden-Württemberg', 0)).toBe(135.56);
     });
@@ -70,11 +79,42 @@ describe('sunCalculator', function(){
     });
 
     it('should return 1484.19 Euro for 60 KWP in Baden-Wuerttemberg', function () {
-      expect(calculator.calculateSubsidy(60, 'Baden-Württemberg', 0)).toBe(7526.17);
+      expect(calculator.calculateSubsidy(60, 'Baden-Württemberg', 0)).toBe(7507.42);
     });
 
     it('should return 8835.43 Euro for 80 KWP in Sachsen', function () {
-      expect(calculator.calculateSubsidy(80, 'Sachsen', 0)).toBe(8870.19);
+      expect(calculator.calculateSubsidy(80, 'Sachsen', 0)).toBe(8836.37);
+    });
+  });
+
+  describe('adjustSubsidies', function(){
+
+    beforeEach(function(){
+      calculator = sunCalculator();
+    });
+    
+    it('should not adjust the subsidies for current month', function () {
+      var adjustedSubsidies = {'small'   : 13.01, 'medium'  : 12.34,'large'   : 11.01};
+
+      calculator.adjustSubsidies(new Date(2014,5,14), new Date(2014,5,14));
+
+      expect(calculator.getSubsidies()).toEqual(adjustedSubsidies);
+    });
+
+    it('should adjust the subsidies for 2 months in future', function () {
+      var adjustedSubsidies = {'small'   : 12.75, 'medium'  : 12.09,'large'   : 10.79};
+
+      calculator.adjustSubsidies(new Date(2014,5,14), new Date(2014,7,14));
+
+      expect(calculator.getSubsidies()).toEqual(adjustedSubsidies);
+    });
+
+    it('should adjust the subsidies for 9 months in future', function () {
+      var adjustedSubsidies = {'small'   : 11.88, 'medium'  : 11.27,'large'   : 10.06};
+
+      calculator.adjustSubsidies(new Date(2014,5,14), new Date(2015,2,14));
+
+      expect(calculator.getSubsidies()).toEqual(adjustedSubsidies);
     });
   })
 });
