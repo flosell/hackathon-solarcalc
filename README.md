@@ -1,0 +1,2 @@
+- update node packages via 'npm install'
+- start server with 'node server.js'
