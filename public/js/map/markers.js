@@ -109,7 +109,7 @@ MarkerPolyline.prototype.reachedFirstMarkerAgain = function(currentCoord) {
     return distance < 2;
 }
 
-var initMarkers = function(map) {
+var initMarkers = function(map,areaUpdatedCallback) {
     var markerPolyline = null;
     var polylineInitialized = function() {
         return markerPolyline!=null;
@@ -140,6 +140,9 @@ var initMarkers = function(map) {
             if (markerPolyline.reachedFirstMarkerAgain(coord)) {
                 var coords = markerPolyline.orderedCoords;
                 displayArea(map,coords);
+                areaUpdatedCallback({
+                    sqm:areaInSquareMeters(coords)
+                })
 //                alert("size: "+areaInSquareMeters(coords));
 //                stateForCoordinates(coords,function(state){alert("we are in "+state)})
             }else {

@@ -9,6 +9,19 @@ solarApp.controller('SearchCtrl', [
   }
 ]);
 
+solarApp.controller('MapCtrl', [
+  '$scope',
+  function ($scope) {
+
+    initMap(function(data) {
+        $scope.$apply(function(){
+            $scope.sqm = data.sqm;
+            console.log('sqm'+$scope.sqm)
+        })
+    })
+  }
+]);
+
 solarApp.directive('radio', function ($timeout) {
   return {
     restrict: 'A',
