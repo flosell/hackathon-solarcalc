@@ -21,7 +21,7 @@
   <body ng-app="solarcap-app">
 
   <div class="container-fluid full-height">
-    <div class="row full-height">
+    <div class="row full-height" ng-controller="CalcCtrl">
       <div class="col-xs-12 col-sm-7 full-height">
         <div class="full-height" id="mapContainer" ng-controller="MapCtrl"></div>
       </div>
@@ -67,7 +67,12 @@
 
 
         </form>
-
+        <div class="row">
+            <div class="col-xs-8">
+                <label>Subsidy</label>
+                <span>{{subsidy}}</span>
+            </div>
+        </div>
       </div>
     </div>
   </div>

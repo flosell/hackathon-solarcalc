@@ -14,6 +14,7 @@ solarApp.controller('SearchCtrl', [
 
     $scope.doSearch = function () {
       search($scope.address)
+      $scope.$parent.subsidy = "blubb"
     }
   }
 ]);
@@ -31,6 +32,8 @@ solarApp.controller('MapCtrl', [
     $scope.$watch("selectedArea",function(data) {
         if (data === undefined) return;
 
+        
+
         console.log('DEBUG: ', sunCalculator());
         console.log('updatedMap: ',data);
         var calculator = sunCalculator();
@@ -40,6 +43,21 @@ solarApp.controller('MapCtrl', [
         var subsidy = calculator.calculateSubsidy(KWP, state, 0);
         console.log('DEBUG: ',subsidy);
     })
+  }
+]);
+
+solarApp.controller('CalcCtrl', [
+  '$scope',
+  function ($scope) {
+
+    initMap(function(data) {
+        $scope.$apply(function(){
+            $scope.selectedArea = data
+        })
+    })
+
+    $scope.subsidy = "initial"
+
   }
 ]);
 
