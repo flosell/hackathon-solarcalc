@@ -35,6 +35,10 @@ var sunCalculator = function(){
     TODAY = newDate;
   };
 
+  instance.calculateAcquisitionCosts = function(KWP){
+    return KWP ? formatFloat((KWP * 1300), 2) : undefined;
+  };
+
   instance.calculateSubsidy = function(KWP, state, sum){
     if(KWP <= 10) {
       var midSumSmall = instance.calculateKWHYearForKWPForState(KWP, state) * SUBSIDIES['small'] + sum;

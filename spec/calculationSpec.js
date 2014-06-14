@@ -130,4 +130,23 @@ describe('sunCalculator', function(){
       expect(calculator.calculateSubsidy(60, 'Baden-Württemberg', 0)).toBe(6343.90);
     });
   });
+
+  describe('calculateAcquisitionCosts', function(){
+
+    beforeEach(function(){
+      calculator = sunCalculator();
+    });
+
+    it('should return undefined for no KWP', function () {
+      expect(calculator.calculateAcquisitionCosts(undefined)).toBe(undefined);
+    });
+
+    it('should return 1300.00 Euro for 1 KWP', function () {
+      expect(calculator.calculateAcquisitionCosts(1)).toBe(1300.00);
+    });
+
+    it('should return 13000.00 Euro for 10 KWP', function () {
+      expect(calculator.calculateAcquisitionCosts(10)).toBe(13000.00);
+    });
+  });
 });
