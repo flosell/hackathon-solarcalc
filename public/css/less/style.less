@@ -78,7 +78,7 @@ body {
 
 .row-padding {
   .row {
-    padding-bottom: 20px;
+    padding-bottom: 30px;
   }
 }
 
@@ -124,4 +124,48 @@ body {
 
 .dropdown-menu {
   background-color: #fff;
+}
+
+/* style mdo's wtfforms */
+.control input:focus ~ .control-indicator {
+  box-shadow: 0 0 0 .075rem #fff, 0 0 0 .2rem darken(@lightBlue, 10%);
+}
+
+.control input:checked ~ .control-indicator {
+  background-color: @lightBlue;
+}
+
+.select select:focus {
+  box-shadow: 0 0 0 .075rem #fff, 0 0 0 .2rem @lightBlue;
+}
+
+.select select:active {
+  background-color: @lightBlue;
+}
+
+.control-indicator {
+  height: 15px;
+  width: 15px;
+}
+
+/* styles navbar */
+.navbar {
+  margin-bottom: 0;
+  min-height: 30px;
+}
+
+.navbar-default {
+  margin-top: 0;
+  background-color: @lightBlue;
+}
+
+.navbar-nav{
+  margin: 0 auto;
+  display: table;
+  table-layout: fixed;
+  float:none;
+}
+
+.navbar-nav>li.logo>a {
+  padding: 0;
 }

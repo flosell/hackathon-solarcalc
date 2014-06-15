@@ -21,6 +21,37 @@
   </head>
   <body ng-app="solarcap-app">
 
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <!--<a class="navbar-brand" href="#">Brand</a>-->
+      </div>
+
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="nav navbar-nav">
+          <li class="logo">
+            <img src="img/logo.png" width="35">
+          </li>
+          <!--
+          <li class="active"><a href="#">Item</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Menu Item</a></li>
+            </ul>
+          </li>
+          -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+
   <div class="container-fluid full-height">
     <div class="row full-height">
       <div class="col-xs-12 col-sm-8 full-height">
@@ -78,32 +109,32 @@
                 <label class="control checkbox">
                   <input type="checkbox" ng-model="inputData.withBattery">
                   <span class="control-indicator"></span>
-                  Calculate with battery?
+                  &nbsp;&nbsp;Calculate with battery?
                 </label>
               </div>
 
             </div>
           </div>
           <div class="row">
-            <div class="col-xs-3">
+            <div ng-class="{'col-sm-6': inputData.withBattery, 'col-xs-4': !inputData.withBattery}">
               <div class="result-item">
                 <strong>Yearly Subsidy</strong><br>
                 {{ subsidy | currency : ""}} EUR
               </div>
             </div>
-            <div class="col-xs-3">
+            <div ng-class="{'col-sm-6': inputData.withBattery, 'col-xs-4': !inputData.withBattery}">
               <div class="result-item">
                 <strong>Acquisition Cost</strong><br>
                 {{ acquisitionCosts | currency: ""}} EUR
               </div>
             </div>
-            <div class="col-xs-3">
+            <div ng-class="{'col-sm-6': inputData.withBattery, 'col-xs-4': !inputData.withBattery}">
               <div class="result-item">
                 <strong>Amortization in years</strong><br>
                 {{amortizationInYears}}
               </div>
             </div>
-            <div class="col-xs-3" ng-if="inputData.withBattery">
+            <div class="col-xs-6" ng-if="inputData.withBattery">
               <div class="result-item">
                 <strong>Saving from Battery</strong><br>
                 {{savingFromBattery}}
