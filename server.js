@@ -16,9 +16,9 @@ app.get('/api', function (req, res) {
     state = req.query.state,
     residents = req.query.residents,
     kind = req.query.kind;
-    withBattery = req.query.withBattery
+    withBattery = req.query.withBattery;
 
-  calc =  calculator()
+  calc =  calculator();
   calc.setBattery(withBattery);
   var result = calc.calculateSolarCap(area, state, residents, kind);
 

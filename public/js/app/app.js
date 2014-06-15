@@ -16,7 +16,7 @@ solarApp.controller('CalcCtrl', [
       kind: "HOME",
       residents: 1,
       withBattery: false
-    }
+    };
 
     $scope.recommendations = [];
 
@@ -25,7 +25,7 @@ solarApp.controller('CalcCtrl', [
 
     $scope.$watch("inputData",function(data) {
       var calculator = sunCalculator();
-      calculator.setBattery(data.withBattery)
+      calculator.setBattery(data.withBattery);
       var calculationResult = calculator.calculateSolarCap(data.selectedArea, data.selectedState, data.residents, data.kind)
 
       $scope.subsidy = calculationResult.yearlySubsidy;
@@ -38,6 +38,7 @@ solarApp.controller('CalcCtrl', [
     },true);
 
     var mapWatcher = $rootScope.$on('areaSelected', function(event, data){
+      console.log('DEBUG: ',data.selectedState);
       $scope.inputData.selectedArea = data.selectedArea;
       $scope.inputData.selectedState = data.selectedState;
     });
