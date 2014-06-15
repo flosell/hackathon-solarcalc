@@ -108,7 +108,9 @@
           </div>
           <div class="row" ng-if="errorMessage != ''">
               <div class="col-xs-12">
-                  {{errorMessage}}
+                <div class="alert alert-danger">
+                  <i class="fa fa-exclamation-circle"></i>&nbsp;{{errorMessage}}
+                </div>
               </div>
           </div>
           <div class="row" ng-show="showResult">
