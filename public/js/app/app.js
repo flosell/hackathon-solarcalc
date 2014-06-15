@@ -42,9 +42,12 @@ solarApp.controller('CalcCtrl', [
         $scope.errorMessage = "";
       }
 
-
       $scope.generateChartDate();
-
+      if('argument missing' === calculationResult.error){
+        $scope.showResult = false;
+      } else {
+        $scope.showResult = true;
+      }
     },true);
 
 

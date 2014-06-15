@@ -119,7 +119,7 @@
                   {{errorMessage}}
               </div>
           </div>
-          <div class="row">
+          <div class="row" ng-show="showResult">
             <div ng-class="{'col-sm-6': inputData.withBattery, 'col-xs-4': !inputData.withBattery}">
               <div class="result-item">
                 <strong>Yearly Subsidy</strong><br>
@@ -145,13 +145,12 @@
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row" ng-show="showResult">
             <div class="col-xs-12">
-              <!--<div class="chart" ac-chart="chart.type" ac-data="chart.data" ac-config="chart.config" id="chart"></div>-->
               <div class="chart" google-chart chart="chartObject" style="{{cssStyle}}"></div>
             </div>
           </div>
-          <div class="row">
+          <div class="row" ng-show="showResult">
             <div class="col-xs-6">
               <div class="result-item">
                 <i class="fa fa-flash fa-2x yellow"></i><br><strong>{{KWHPerYear | number: 0 }} kwh</strong></i>
