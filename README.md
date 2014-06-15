@@ -1,7 +1,10 @@
 Overview
 ========
 
-- Build Status: [![Build Status](https://snap-ci.com/flosell/hackathon-solarcalc/branch/master/build_image)](https://snap-ci.com/flosell/hackathon-solarcalc/branch/master)
+Build status
+------------
+
+[![Build Status](https://snap-ci.com/flosell/hackathon-solarcalc/branch/master/build_image)](https://snap-ci.com/flosell/hackathon-solarcalc/branch/master)
 
 Integration Environment
 -----------------------
