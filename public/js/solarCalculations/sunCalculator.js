@@ -1,4 +1,5 @@
 var sunCalculator = function () {
+//  CONSTANTS
   var PEAK_DATA = {
     'Baden-Wurttemberg': 1041.973,
     'Bavaria': 1025.547,
@@ -38,15 +39,20 @@ var sunCalculator = function () {
 
   var CURRENT_ENERGY_PRICE_CENT = 26;
 
-//   SAVED_ENERGY_PER_PERSON_PER_DAY_KWH * PERSONS * CURRENT_ENERGY_PRICE_EURO * 365 --> EURO pro Jahr
-
   var instance = {};
 
-  //  FIXED DATE OF SUBSIDIES
   var TODAY = new Date();
+
   var SUBSIDIES = undefined;
+
   var PEOPLE = 0;
 
+//  INITIATION
+  function init() {
+    instance.adjustSubsidies(new Date());
+  }
+
+//  PUBLIC INTERFACE
   instance.batteryToggle = false;
 
   instance.setBattery = function (boolean) {
@@ -57,13 +63,114 @@ var sunCalculator = function () {
     PEOPLE = numberOfPeople;
   };
 
-  function init() {
-    instance.adjustSubsidies(new Date());
-  }
-
   instance.calculateKWP = function (sqm) {
     return sqm ? formatFloat(sqm * 0.15, 5) : undefined;
   };
+
+  instance.calculateCO2Savings = function (KWP, state) {
+    return getStateKWHData(state) ? formatGrammtoKG(getStateKWHData(state) * KWP * CO2_SAVINGS_IN_GRAMM) : undefined;
+  };
+
+  instance.getSubsidies = function () {
+    return SUBSIDIES;
+  };
+
+  instance.setDates = function (oldDate, newDate) {
+    FIXED_DATE = oldDate;
+    TODAY = newDate;
+  };
+
+  instance.calculateAmortization = function (acquisitionCost, grossProfit) {
+    return formatFloat(acquisitionCost / grossProfit, 0);
+  };
+
+  instance.calculateAcquisitionCosts = function (KWP, kind) {
+    if (KWP) {
+      return kind === 'HOME'
+        ? formatFloat((KWP * ACQUISITION_COST_PER_KWP_HOME), 2)
+        : formatFloat((KWP * ACQUISITION_COST_PER_KWP_FIELD), 2);
+    } else {
+      return undefined;
+    }
+  };
+
+  instance.calculateSubsidy = function (KWP, state, sum) {
+    if (sum === 0) {
+      sum = calculateExtraSubsidy(KWP)
+    }
+
+    if (KWP <= 10) {
+      var midSumSmall = calculateKWHYearForKWPForStateSmall(KWP, state) * SUBSIDIES['small'] + sum;
+      return formatCentToEuro(midSumSmall);
+    } else if (KWP <= 40) {
+      var midSumMedium = calculateKWHYearForKWPForStateOther(KWP - 10, state) * SUBSIDIES['medium'] + sum;
+      return instance.calculateSubsidy(10, state, midSumMedium);
+    } else {
+      var midSumMediumLarge = calculateKWHYearForKWPForStateOther(KWP - 40, state) * SUBSIDIES['large'] + sum;
+      return instance.calculateSubsidy(40, state, midSumMediumLarge);
+    }
+  };
+
+  instance.calculateSolarCap = function (sqm, state, people, kind) {
+    var returnObject = {};
+    returnObject.error = undefined;
+
+    if (sqm && state && people && kind) {
+      instance.setPeople(people);
+      var actualKWP = instance.calculateKWP(sqm);
+
+      returnObject.yearlySubsidy = instance.calculateSubsidy(actualKWP, state, 0);
+      returnObject.savingFromBattery = calculateRevenueFromBattery();
+      returnObject.acquisitionCosts = calculateAdditionalAcquisitionCosts(instance.calculateAcquisitionCosts(actualKWP, kind));
+      returnObject.amortizationInYears = instance.calculateAmortization(returnObject.acquisitionCosts,
+        returnObject.yearlySubsidy);
+      returnObject.CO2Savings = instance.calculateCO2Savings(actualKWP, state);
+
+      if (returnObject.yearlySubsidy <= 0) {
+        setToNegativeSubsidy(returnObject);
+      }
+    } else {
+      returnObject.error = 'argument missing';
+    }
+    return returnObject;
+  };
+
+  instance.adjustSubsidies = function (fixedDateInput, todayInput) {
+    var fixedDate = fixedDateInput ? fixedDateInput : FIXED_DATE;
+    var today = todayInput ? todayInput : TODAY;
+
+    var monthsDifference = getMonthsDifference(fixedDate, today);
+    var adjustedSubsidies = [];
+
+    for (var subsidy in BASE_SUBSIDIES) {
+      var multiplicationFactor = Math.pow(0.99, monthsDifference);
+      var adjustedSubsidy = BASE_SUBSIDIES[subsidy] * multiplicationFactor;
+      adjustedSubsidies.push(formatFloat(adjustedSubsidy, 2));
+    }
+
+    SUBSIDIES = {'small': adjustedSubsidies[0], 'medium': adjustedSubsidies[1], 'large': adjustedSubsidies[2]};
+  };
+
+//  PRIVATE INTERFACE / HELPER METHODS
+  function formatCentToEuro(cent) {
+    return formatFloat((cent / 100), 2);
+  }
+
+  function formatGrammtoKG(gramm) {
+    return formatFloat((gramm / 1000), 2);
+  }
+
+  function calculateExtraSubsidy(KWP) {
+    return ((GENERATION_IN_KWH_PER_KWP_PER_DAY * KWP) - (CONSUMPTION_PER_PERSON_DAY * PEOPLE)) * EXTRA_SUBSIDY_IN_CENT;
+  }
+
+  function getStateKWHData(state) {
+    return PEAK_DATA[state] ? PEAK_DATA[state] : undefined;
+  }
+
+  function formatFloat(float, decimalPoints) {
+    return parseFloat(float.toFixed(decimalPoints));
+  }
 
   function calculateKWHYearForKWPForStateSmall(KWP, state) {
     var KWHperKWP = undefined;
@@ -73,6 +180,15 @@ var sunCalculator = function () {
       }
       return KWHperKWP;
     }
+  }
+
+  function getMonthsDifference(fixedDate, today) {
+    var d1Y = fixedDate.getFullYear();
+    var d2Y = today.getFullYear();
+    var d1M = fixedDate.getMonth();
+    var d2M = today.getMonth();
+
+    return (d2M + 12 * d2Y) - (d1M + 12 * d1Y);
   }
 
   function calculateRevenueFromBattery() {
@@ -103,87 +219,6 @@ var sunCalculator = function () {
     }
   }
 
-  instance.calculateCO2Savings = function (KWP, state) {
-    return getStateKWHData(state) ? formatGrammtoKG(getStateKWHData(state) * KWP * CO2_SAVINGS_IN_GRAMM) : undefined;
-  };
-
-  instance.getSubsidies = function () {
-    return SUBSIDIES;
-  };
-
-  instance.setDates = function (oldDate, newDate) {
-    FIXED_DATE = oldDate;
-    TODAY = newDate;
-  };
-
-  instance.calculateAmortization = function (acquisitionCost, grossProfit) {
-    return formatFloat(acquisitionCost / grossProfit, 0);
-  };
-
-  instance.calculateAcquisitionCosts = function (KWP, kind) {
-    if (KWP) {
-      return kind === 'HOME'
-        ? formatFloat((KWP * ACQUISITION_COST_PER_KWP_HOME), 2)
-        : formatFloat((KWP * ACQUISITION_COST_PER_KWP_FIELD), 2);
-    } else {
-      return undefined;
-    }
-  };
-
-  function calculateExtraSubsidy(KWP) {
-    return ((GENERATION_IN_KWH_PER_KWP_PER_DAY * KWP) - (CONSUMPTION_PER_PERSON_DAY * PEOPLE)) * EXTRA_SUBSIDY_IN_CENT;
-  }
-
-  instance.calculateSubsidy = function (KWP, state, sum) {
-    if (sum === 0) {
-      sum = calculateExtraSubsidy(KWP)
-    }
-
-    if (KWP <= 10) {
-      var midSumSmall = calculateKWHYearForKWPForStateSmall(KWP, state) * SUBSIDIES['small'] + sum;
-      return formatCentToEuro(midSumSmall);
-    } else if (KWP <= 40) {
-      var midSumMedium = calculateKWHYearForKWPForStateOther(KWP - 10, state) * SUBSIDIES['medium'] + sum;
-      return instance.calculateSubsidy(10, state, midSumMedium);
-    } else {
-      var midSumMediumLarge = calculateKWHYearForKWPForStateOther(KWP - 40, state) * SUBSIDIES['large'] + sum;
-      return instance.calculateSubsidy(40, state, midSumMediumLarge);
-    }
-  };
-
-  function getMonthsDifference(fixedDate, today) {
-    var d1Y = fixedDate.getFullYear();
-    var d2Y = today.getFullYear();
-    var d1M = fixedDate.getMonth();
-    var d2M = today.getMonth();
-
-    return (d2M + 12 * d2Y) - (d1M + 12 * d1Y);
-  }
-
-  instance.calculateSolarCap = function (sqm, state, people, kind) {
-    var returnObject = {};
-    returnObject.error = undefined;
-
-    if (sqm && state && people && kind) {
-      instance.setPeople(people);
-      var actualKWP = instance.calculateKWP(sqm);
-
-      returnObject.yearlySubsidy = instance.calculateSubsidy(actualKWP, state, 0);
-      returnObject.savingFromBattery = calculateRevenueFromBattery();
-      returnObject.acquisitionCosts = calculateAdditionalAcquisitionCosts(instance.calculateAcquisitionCosts(actualKWP, kind));
-      returnObject.amortizationInYears = instance.calculateAmortization(returnObject.acquisitionCosts,
-        returnObject.yearlySubsidy);
-      returnObject.CO2Savings = instance.calculateCO2Savings(actualKWP, state);
-
-      if (returnObject.yearlySubsidy <= 0) {
-        setToNegativeSubsidy(returnObject);
-      }
-    } else {
-      returnObject.error = 'argument missing';
-    }
-    return returnObject;
-  };
-
   function setToNegativeSubsidy (returnObject){
     returnObject.error = 'negative subsidy';
     returnObject.yearlySubsidy = 0;
@@ -193,38 +228,6 @@ var sunCalculator = function () {
     returnObject.CO2Savings = 0;
 
     return returnObject;
-  }
-
-  instance.adjustSubsidies = function (fixedDateInput, todayInput) {
-    var fixedDate = fixedDateInput ? fixedDateInput : FIXED_DATE;
-    var today = todayInput ? todayInput : TODAY;
-
-    var monthsDifference = getMonthsDifference(fixedDate, today);
-    var adjustedSubsidies = [];
-
-    for (var subsidy in BASE_SUBSIDIES) {
-      var multiplicationFactor = Math.pow(0.99, monthsDifference);
-      var adjustedSubsidy = BASE_SUBSIDIES[subsidy] * multiplicationFactor;
-      adjustedSubsidies.push(formatFloat(adjustedSubsidy, 2));
-    }
-
-    SUBSIDIES = {'small': adjustedSubsidies[0], 'medium': adjustedSubsidies[1], 'large': adjustedSubsidies[2]};
-  };
-
-  function formatCentToEuro(cent) {
-    return formatFloat((cent / 100), 2);
-  }
-
-  function formatGrammtoKG(gramm) {
-    return formatFloat((gramm / 1000), 2);
-  }
-
-  function getStateKWHData(state) {
-    return PEAK_DATA[state] ? PEAK_DATA[state] : undefined;
-  }
-
-  function formatFloat(float, decimalPoints) {
-    return parseFloat(float.toFixed(decimalPoints));
   }
 
   init();
