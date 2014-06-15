@@ -129,7 +129,7 @@ var sunCalculator = function () {
       returnObject.amortizationInYears = instance.calculateAmortization(returnObject.acquisitionCosts,
         returnObject.yearlySubsidy);
       returnObject.CO2Savings = instance.calculateCO2Savings(actualKWP, state);
-      returnObject.KWHPerYear = calculateKWHPerYear(actualKWP, state, 0);
+      returnObject.KWHPerYear = calculateKWHPerYear(actualKWP, state);
       returnObject.yearlySavings = calculateYearlySavings();
       returnObject.yearlyMoney = formatFloat(returnObject.yearlySavings + returnObject.yearlySubsidy, 2);
 
