@@ -15,6 +15,12 @@ var initMap = function(areaUpdatedCallback) {
         });
     }
 
+    return {
+        map: map,
+        search : search,
+        recommend : recommend(map)
+    }
+
 
 
 }

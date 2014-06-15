@@ -51,17 +51,21 @@ var initSearchRecommendations = function(map) {
     });
 }
 
-var recommend = function(searchTerm, callback) {
-    var processResults = function (data, requestStatus, requestId) {
-        var titles = data.results.items.map(function(item) {
-            return item.title;
+var recommend = function(map) {
+    return function(searchTerm, callback) {
+        var processResults = function (data, requestStatus, requestId) {
+            var titles = data.results.items.map(function(item) {
+                return item.title;
+            });
+
+            callback(titles);
+        }
+
+        searchManager = nokia.places.search.manager.findPlaces({
+            searchTerm: searchTerm,
+            onComplete: processResults,
+            searchCenter: map.center,
+            limit: 10
         });
-
-        callback(titles);
     }
-
-    searchManager = nokia.places.search.manager.findPlaces({
-        searchTerm: searchTerm,
-        onComplete: processResults
-    });
 }
