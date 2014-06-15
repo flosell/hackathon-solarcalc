@@ -79,7 +79,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-6">
               <label>Type:</label>
               <div class="btn-group btn-group-justified type-picker">
                 <div class="btn-group">
@@ -90,9 +90,7 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-6">
               <label>Residents:</label>
               <div class="rating-list">
                 <i class="fa fa-child fa-3x rating-item" ng-class="{'active': inputData.residents >= 1}" ng-click="setRatingValue(1)"></i>
@@ -112,7 +110,6 @@
                   &nbsp;&nbsp;Calculate with battery?
                 </label>
               </div>
-
             </div>
           </div>
           <div class="row" ng-if="errorMessage != ''">
@@ -121,28 +118,22 @@
               </div>
           </div>
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
               <div class="result-item">
                 <strong>Yearly Subsidy</strong><br>
                 {{ subsidy | number: 0}} EUR
               </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-4">
               <div class="result-item">
                 <strong>Acquisition Cost</strong><br>
                 {{ acquisitionCosts | number: 0 }} EUR
               </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-4">
               <div class="result-item">
                 <strong>Amortization in years</strong><br>
                 {{amortizationInYears}}
-              </div>
-            </div>
-            <div class="col-xs-6">
-              <div class="result-item">
-                <strong>Yearly Energy Savings</strong><br>
-                {{yearlySavings | number: 0}} EUR
               </div>
             </div>
           </div>
@@ -163,6 +154,12 @@
             <div class="col-xs-6">
               <div class="result-item">
                 <i class="fa fa-leaf green fa-2x"></i><br><strong>{{CO2Savings | number : 0}} kg CO2 / year</strong>
+              </div>
+            </div>
+            <div class="col-xs-12">
+              <div class="result-item">
+                <strong>Yearly Energy Savings</strong><br>
+                {{yearlySavings | number: 0}} EUR
               </div>
             </div>
           </div>
