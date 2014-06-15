@@ -70,9 +70,18 @@
                 <i class="fa fa-child fa-3x rating-item" ng-class="{'active': inputData.residents >= 4}" ng-click="setRatingValue(4)"></i>
                 <i class="fa fa-child fa-3x rating-item" ng-class="{'active': inputData.residents == 5}" ng-click="setRatingValue(5)"></i>
               </div>
-              <div>
-                  Calculate with battery? <input type="checkbox" ng-model="inputData.withBattery">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="controls-stacked">
+                <label class="control checkbox">
+                  <input type="checkbox" ng-model="inputData.withBattery">
+                  <span class="control-indicator"></span>
+                  Calculate with battery?
+                </label>
               </div>
+
             </div>
           </div>
           <div class="row">
@@ -124,16 +133,12 @@
     </div>
   </div>
   <script src="http://js.cit.api.here.com/se/2.5.4/jsl.js?with=maps,positioning,places,placesdata" type="text/javascript" charset="utf-8"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
+  <script src="vendor/js/jquery-1.11.1.min.js"></script>
+  <script src="vendor/js/angular.min.js"></script>
+  <script src="vendor/js/angular-animate.min.js"></script>
   <script src="vendor/js/bootstrap.min.js"></script>
   <script src="vendor/js/ui-bootstrap-custom-tpls-0.10.0.min.js"></script>
   <script src="vendor/js/ng-google-chart.js"></script>
-  <!--
-  <script src="vendor/js/d3.min.js"></script>
-  <script src="vendor/js/angular-charts.min.js"></script>
-  -->
-
   <script src="js/app/app.js" type="text/javascript"></script>
   <script src="js/map/mappoc.js" type="text/javascript"></script>
   <script src="js/solarCalculations/sunCalculator.js" type="text/javascript"></script>
