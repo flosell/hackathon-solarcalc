@@ -27,18 +27,21 @@ body {
   color: #fff;
 }
 
-.type-picker {
-  .active {
+.btn {
+  &.active {
     background: @lightBlue;
     color: #fff;
   }
 
-  .active:hover {
+  &.active:hover {
     background: @lightBlue;
   }
 }
 
 .rating-list {
+  height: 56px;
+  padding-top: 12px;
+
   .rating-item {
     cursor: pointer;
 
@@ -64,6 +67,7 @@ body {
   -webkit-transition: background-color .22s,border-color .22s,box-shadow .22s;
   transition: background-color .22s,border-color .22s,box-shadow .22s;
   outline: none;
+  font-size: 12px;
 
   &:visited,
   &:active,
@@ -99,11 +103,16 @@ body {
   transition: background-color .22s,border-color .22s,box-shadow .22s;
   outline: none;
   text-align: center;
+  font-size: 13px;
 
   -webkit-transition: color 0.6s, background-color 0.3s;
   -moz-transition: color 0.6s, background-color 0.3s;
   -ms-transition: color 0.6s, background-color 0.3s;
   transition: color 0.6s, background-color 0.3s;
+
+  strong {
+    font-size: 15px;
+  }
 
   .green {
     color: #8CC152;
