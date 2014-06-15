@@ -9,9 +9,7 @@ solarApp.controller('CalcCtrl', [
   '$rootScope',
   '$scope',
   function ($rootScope, $scope) {
-    $scope.map = {
 
-    }
     $scope.inputData = {
       selectedArea: 0,
       selectedState: "Berlin",
@@ -36,6 +34,7 @@ solarApp.controller('CalcCtrl', [
       $scope.amortizationInYears = calculationResult.amortizationInYears;
       $scope.savingFromBattery = calculationResult.savingFromBattery;
       $scope.CO2Savings = calculationResult.CO2Savings;
+      $scope.KWHPerYear = calculationResult.KWHPerYear;
 
       if (calculationResult.amortizationInYears > 30 || calculationResult.error ===  'negative subsidy') {
         $scope.errorMessage = "Your panel size is inefficient!";
@@ -154,6 +153,10 @@ solarApp.controller('CalcCtrl', [
             $scope.inputData.selectedState = data.selectedState;
         })
     });
+
+    $scope.resetMap = function() {
+        $scope.map.reset();
+    }
   }
 ]);
 

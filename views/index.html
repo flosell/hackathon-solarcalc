@@ -20,7 +20,6 @@
 
   </head>
   <body ng-app="solarcap-app">
-
   <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -52,10 +51,11 @@
     </div>
   </nav>
 
-  <div class="container-fluid full-height">
+<div class="container-fluid full-height"  ng-controller="CalcCtrl">
     <div class="row full-height">
       <div class="col-xs-12 col-sm-8 full-height">
-        <div class="full-height" id="mapContainer" ng-controller="MapCtrl"></div>
+        <button ng-click="resetMap()">reset</button>
+        <div class="full-height" id="mapContainer"></div>
       </div>
       <div class="col-xs-12 col-sm-4 panel-right full-height">
         <script type="text/ng-template" id="typeaheadTemplate.html">
@@ -63,7 +63,7 @@
             <span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
           </a>
         </script>
-        <form class="row-padding" role="form" ng-controller="CalcCtrl" ng-submit="doSearch()">
+        <form class="row-padding" role="form" ng-submit="doSearch()">
           <div class="row">
             <div class="col-xs-12">
               <!--<label for="address">Address:</label>-->
@@ -155,12 +155,12 @@
           <div class="row">
             <div class="col-xs-6">
               <div class="result-item">
-                <i class="fa fa-flash fa-2x yellow"></i><br><strong>1234 kwh</strong></i>
+                <i class="fa fa-flash fa-2x yellow"></i><br><strong>{{KWHPerYear | number: 0 }} kwh</strong></i>
               </div>
             </div>
             <div class="col-xs-6">
               <div class="result-item">
-                <i class="fa fa-leaf green fa-2x"></i><br><strong>{{CO2Savings | number : 2}}kg CO2 / year</strong>
+                <i class="fa fa-leaf green fa-2x"></i><br><strong>{{CO2Savings | number : 0}} kg CO2 / year</strong>
               </div>
             </div>
           </div>
