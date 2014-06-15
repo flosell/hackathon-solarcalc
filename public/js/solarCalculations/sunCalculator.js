@@ -131,6 +131,7 @@ var sunCalculator = function () {
       returnObject.CO2Savings = instance.calculateCO2Savings(actualKWP, state);
       returnObject.KWHPerYear = calculateKWHPerYear(actualKWP, state, 0);
       returnObject.yearlySavings = calculateYearlySavings();
+      returnObject.yearlyMoney = formatFloat(returnObject.yearlySavings + returnObject.yearlySubsidy, 2);
 
       if (returnObject.yearlySubsidy <= 0) {
         setToNegativeSubsidy(returnObject);
@@ -248,6 +249,7 @@ var sunCalculator = function () {
     returnObject.CO2Savings = 0;
     returnObject.KWHPerYear = 0;
     returnObject.yearlySavings = 0;
+    returnObject.yearlyMoney = 0;
 
     return returnObject;
   }

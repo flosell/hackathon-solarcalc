@@ -81,7 +81,7 @@ solarApp.controller('CalcCtrl', [
         "rows": []
       },
       "options": {
-        "title": "Graph",
+        "title": "Daily Energy Production / Consumption",
         "isStacked": "false",
         "colors": ['#4A89DC','#2dcff1'],
         "fill": 40,

@@ -155,6 +155,7 @@ describe('sunCalculator', function () {
         amortizationInYears: 14,
         KWHPerYear: 62518.38,
         yearlySavings: 432.74,
+        yearlyMoney: 7375.83,
         error: undefined
       };
 
@@ -172,6 +173,7 @@ describe('sunCalculator', function () {
         amortizationInYears: 13,
         KWHPerYear: 62518.38,
         yearlySavings: 108.19,
+        yearlyMoney: 7442.43,
         error: undefined
       };
 
@@ -191,6 +193,7 @@ describe('sunCalculator', function () {
         amortizationInYears: 0,
         KWHPerYear: 0,
         yearlySavings: 0,
+        yearlyMoney: 0,
         error: 'negative subsidy'
       };
 
