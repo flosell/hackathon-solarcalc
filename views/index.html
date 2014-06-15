@@ -19,7 +19,7 @@
     <![endif]-->
 
   </head>
-  <body ng-app="solarcap-app">
+  <body ng-app="solarcap-app" ng-controller="CalcCtrl">
   <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -29,7 +29,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#" ng-click="resetMap"><i class="fa fa-refresh"></i></a>
+        <a class="navbar-brand" href="#" ng-click="resetMap()"><i class="fa fa-refresh"></i></a>
       </div>
 
       <div class="collapse navbar-collapse" id="nav">
@@ -51,7 +51,7 @@
     </div>
   </nav>
 
-<div class="container-fluid full-height"  ng-controller="CalcCtrl">
+<div class="container-fluid full-height"  >
     <div class="row full-height">
       <div class="col-xs-12 col-sm-8 full-height">
         <div class="full-height" id="mapContainer"></div>
