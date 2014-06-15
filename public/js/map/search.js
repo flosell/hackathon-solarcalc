@@ -61,6 +61,7 @@ var recommend = function(map) {
             callback(titles);
         }
 
+        // http://stackoverflow.com/questions/9571953/nokia-ovi-map-autocomplete-feature
         searchManager = nokia.places.search.manager.findPlaces({
             searchTerm: searchTerm + ", germany",
             onComplete: processResults,
