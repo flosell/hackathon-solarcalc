@@ -106,8 +106,8 @@ var sunCalculator = function () {
       var midSumMedium = calculateKWHYearForKWPForStateOther(KWP - 10, state) * SUBSIDIES['medium'] + sum;
       return instance.calculateSubsidy(10, state, midSumMedium);
     } else {
-      var midSumMediumLarge = calculateKWHYearForKWPForStateOther(KWP - 40, state) * SUBSIDIES['large'] + sum;
-      return instance.calculateSubsidy(40, state, midSumMediumLarge);
+      var midSumLarge = calculateKWHYearForKWPForStateOther(KWP - 40, state) * SUBSIDIES['large'] + sum;
+      return instance.calculateSubsidy(40, state, midSumLarge);
     }
   };
 
@@ -125,6 +125,7 @@ var sunCalculator = function () {
       returnObject.amortizationInYears = instance.calculateAmortization(returnObject.acquisitionCosts,
         returnObject.yearlySubsidy);
       returnObject.CO2Savings = instance.calculateCO2Savings(actualKWP, state);
+      returnObject.KWHPerYear = calculateKWHPerYear(actualKWP, state, 0);
 
       if (returnObject.yearlySubsidy <= 0) {
         setToNegativeSubsidy(returnObject);
@@ -209,6 +210,18 @@ var sunCalculator = function () {
     }
   }
 
+  function calculateKWHPerYear (KWP, state, sum) {
+    if (KWP <= 10) {
+      return formatFloat(calculateKWHYearForKWPForStateSmall(KWP, state) + sum, 2);
+    } else if (KWP <= 40) {
+      var midSumMedium = calculateKWHYearForKWPForStateOther(KWP - 10, state) + sum;
+      return calculateKWHPerYear(10, state, midSumMedium);
+    } else {
+      var midSumLarge = calculateKWHYearForKWPForStateOther(KWP - 40, state) + sum;
+      return calculateKWHPerYear(40, state, midSumLarge);
+    }
+  }
+
   function calculateKWHYearForKWPForStateOther(KWP, state) {
     var KWHperKWP = undefined;
     if (KWP && state) {
@@ -226,6 +239,7 @@ var sunCalculator = function () {
     returnObject.amortizationInYears = 0;
     returnObject.acquisitionCosts = 0;
     returnObject.CO2Savings = 0;
+    returnObject.KWHPerYear = 0;
 
     return returnObject;
   }

@@ -152,6 +152,7 @@ describe('sunCalculator', function () {
         CO2Savings: 43762.87,
         savingFromBattery: 208.78,
         amortizationInYears: 15,
+        KWHPerYear: 58018.65,
         error: undefined
       };
 
@@ -167,6 +168,7 @@ describe('sunCalculator', function () {
         savingFromBattery: 52.20,
         CO2Savings: 43762.87,
         amortizationInYears: 14,
+        KWHPerYear: 61018.65,
         error: undefined
       };
 
@@ -184,6 +186,7 @@ describe('sunCalculator', function () {
         savingFromBattery: 0,
         CO2Savings: 0,
         amortizationInYears: 0,
+        KWHPerYear: 0,
         error: 'negative subsidy'
       };
 
