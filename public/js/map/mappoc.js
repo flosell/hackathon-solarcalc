@@ -19,7 +19,7 @@ var initMap = function(areaUpdatedCallback) {
         map: map,
         search : search,
         recommend : recommend(map),
-        reset: markers.resetMarkers,
+        reset: markers.resetMarkers
     }
 
 

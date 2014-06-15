@@ -2,7 +2,7 @@ var initializeMap=function() {
     return new nokia.maps.map.Display(
        document.getElementById("mapContainer"), {
            baseMapType: nokia.maps.map.Display.SATELLITE,
-§           zoomLevel: 10,
+           zoomLevel: 10,
            center: [52.51, 13.4],
            components: [
                new nokia.maps.map.component.Behavior(),
