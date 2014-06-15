@@ -115,6 +115,11 @@
 
             </div>
           </div>
+          <div class="row" ng-if="errorMessage != ''">
+              <div class="col-xs-12">
+                  {{errorMessage}}
+              </div>
+          </div>
           <div class="row">
             <div ng-class="{'col-sm-6': inputData.withBattery, 'col-xs-4': !inputData.withBattery}">
               <div class="result-item">

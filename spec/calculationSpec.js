@@ -32,24 +32,24 @@ describe('sunCalculator', function () {
     });
 
     it('should return 70.88 Euro for 1 KWP in Baden-Wuerttemberg', function () {
-      expect(calculator.calculateSubsidy(1, 'Baden-Württemberg', 0)).toBe(70.88);
+      expect(calculator.calculateSubsidy(1, 'Baden-Wurttemberg', 0)).toBe(70.88);
     });
 
     it('should return 206.82 Euro for 2 KWP in Baden-Wuerttemberg', function () {
-      expect(calculator.calculateSubsidy(2, 'Baden-Württemberg', 0)).toBe(206.82);
+      expect(calculator.calculateSubsidy(2, 'Baden-Wurttemberg', 0)).toBe(206.82);
     });
 
     it('should return 1294.3 Euro for 10 KWP in Baden-Wuerttemberg', function () {
-      expect(calculator.calculateSubsidy(10, 'Baden-Württemberg', 0)).toBe(1294.3);
+      expect(calculator.calculateSubsidy(10, 'Baden-Wurttemberg', 0)).toBe(1294.3);
     });
 
     it('should return 1423.25 Euro for 11 KWP in Baden-Wuerttemberg', function () {
-      expect(calculator.calculateSubsidy(11, 'Baden-Württemberg', 0)).toBe(1423.25);
+      expect(calculator.calculateSubsidy(11, 'Baden-Wurttemberg', 0)).toBe(1423.25);
     });
 
     it('should return 7334.24 Euro for 60 KWP in Baden-Wuerttemberg', function () {
       calculator.setPeople(1);
-      expect(calculator.calculateSubsidy(60, 'Baden-Württemberg', 0)).toBe(7334.24);
+      expect(calculator.calculateSubsidy(60, 'Baden-Wurttemberg', 0)).toBe(7334.24);
     });
 
     it('should return 8800.91 Euro for 80 KWP in Sachsen', function () {
@@ -97,7 +97,7 @@ describe('sunCalculator', function () {
     it('should return 6943.09 Euro for 60 KWP in BW', function () {
       calculator.setPeople(4);
 
-      expect(calculator.calculateSubsidy(60, 'Baden-Württemberg', 0)).toBe(6943.09);
+      expect(calculator.calculateSubsidy(60, 'Baden-Wurttemberg', 0)).toBe(6943.09);
     });
   });
 
@@ -152,10 +152,11 @@ describe('sunCalculator', function () {
         CO2Savings: 43762.87,
         savingFromBattery: 208.78,
         amortizationInYears: 15,
+        KWHPerYear: 58018.65,
         error: undefined
       };
 
-      expect(calculator.calculateSolarCap(400, 'Baden-Württemberg', 4, 'HOME')).toEqual(returnObject);
+      expect(calculator.calculateSolarCap(400, 'Baden-Wurttemberg', 4, 'HOME')).toEqual(returnObject);
     });
 
     it('should return object including all needed data (1 person)', function () {
@@ -167,14 +168,29 @@ describe('sunCalculator', function () {
         savingFromBattery: 52.20,
         CO2Savings: 43762.87,
         amortizationInYears: 14,
+        KWHPerYear: 61018.65,
         error: undefined
       };
 
-      expect(calculator.calculateSolarCap(400, 'Baden-Württemberg', 1, 'HOME')).toEqual(returnObject);
+      expect(calculator.calculateSolarCap(400, 'Baden-Wurttemberg', 1, 'HOME')).toEqual(returnObject);
     });
 
     it('should return object with error if sqm is missing', function () {
-      expect(calculator.calculateSolarCap(undefined, 'Baden-Württemberg', 4, 'HOME').error).toEqual('argument missing');
+      expect(calculator.calculateSolarCap(undefined, 'Baden-Wurttemberg', 4, 'HOME').error).toEqual('argument missing');
+    });
+    
+    it('should render error when yearly subsidy is negative', function () {
+      var returnObject = {
+        yearlySubsidy: 0,
+        acquisitionCosts: 0,
+        savingFromBattery: 0,
+        CO2Savings: 0,
+        amortizationInYears: 0,
+        KWHPerYear: 0,
+        error: 'negative subsidy'
+      };
+
+      expect(calculator.calculateSolarCap(10, 'Baden-Wurttemberg', 5, 'HOME')).toEqual(returnObject);
     });
   });
 
@@ -185,10 +201,6 @@ describe('sunCalculator', function () {
 
     it('should save 7178.83 KG CO2 per year for a 10 KWP plant in Bavaria', function () {
       expect(calculator.calculateCO2Savings(10, 'Bavaria')).toEqual(7178.83);
-    });
-  });
-
-  describe('xxx', function () {
-//    acquis
+    })
   });
 });

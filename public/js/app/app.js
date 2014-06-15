@@ -9,7 +9,9 @@ solarApp.controller('CalcCtrl', [
   '$rootScope',
   '$scope',
   function ($rootScope, $scope) {
+    $scope.map = {
 
+    }
     $scope.inputData = {
       selectedArea: 0,
       selectedState: "Berlin",
@@ -33,15 +35,19 @@ solarApp.controller('CalcCtrl', [
       $scope.amortizationInYears = calculationResult.amortizationInYears;
       $scope.savingFromBattery = calculationResult.savingFromBattery;
       $scope.CO2Savings = calculationResult.CO2Savings;
+
+      if (calculationResult.amortizationInYears > 30 || calculationResult.error ===  'negative subsidy') {
+        $scope.errorMessage = "Your panel size is inefficient!";
+      }else {
+        $scope.errorMessage = "";
+      }
+
+
       $scope.generateChartDate();
 
     },true);
 
-    var mapWatcher = $rootScope.$on('areaSelected', function(event, data){
-      console.log('DEBUG: ',data.selectedState);
-      $scope.inputData.selectedArea = data.selectedArea;
-      $scope.inputData.selectedState = data.selectedState;
-    });
+
 
     $scope.chartObject = {
       "type": "AreaChart",
@@ -134,12 +140,19 @@ solarApp.controller('CalcCtrl', [
     }
 
     $scope.doRecommend = function() {
-      recommend($scope.address,function(recommendations) {
+      $scope.map.recommend($scope.address,function(recommendations) {
           $scope.$apply(function() {
             $scope.recommendations = recommendations;
           });
       });
     }
+
+    $scope.map = initMap(function(data) {
+        $scope.$apply(function(){
+            $scope.inputData.selectedArea = data.selectedArea;
+            $scope.inputData.selectedState = data.selectedState;
+        })
+    });
   }
 ]);
 
@@ -148,12 +161,6 @@ solarApp.controller('MapCtrl', [
   '$scope',
   function ($rootScope, $scope) {
 
-    initMap(function(data) {
-        $scope.$apply(function(){
-            $scope.selectedArea = data
-            $rootScope.$broadcast('areaSelected', data);
-        })
-    });
   }
 ]);
 
