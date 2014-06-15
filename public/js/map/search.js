@@ -57,8 +57,8 @@ var recommend = function(map) {
             var titles = data.results.items.map(function(item) {
                 return item.title;
             });
-
-            callback(titles);
+            // deactivated because useless!
+//            callback(titles);
         }
 
         // http://stackoverflow.com/questions/9571953/nokia-ovi-map-autocomplete-feature
