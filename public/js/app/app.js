@@ -155,7 +155,8 @@ solarApp.controller('CalcCtrl', [
     });
 
     $scope.resetMap = function() {
-        $scope.map.reset();
+      $scope.map.reset();
+      $scope.showResult = false;
     }
   }
 ]);
