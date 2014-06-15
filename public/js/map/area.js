@@ -22,7 +22,7 @@ var displayArea = function(map,coords) {
         		},
         		textPen: {
         			strokeColor: "#FFF",
-        			fontSize: 12,
+        			fontSize: 13,
         			fontFamily: "sans-serif",
         			offsetX: 8,
         			offsetY: 17
