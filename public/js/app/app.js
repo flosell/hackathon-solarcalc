@@ -206,4 +206,13 @@ solarApp.directive('radio', function ($timeout) {
   }
 });
 
+solarApp.directive('tooltip', function () {
+  return {
+    restrict: 'A',
+    link: function ($scope, $element, $attributes) {
+      $element.tooltip({});
+    }
+  }
+});
+
 
