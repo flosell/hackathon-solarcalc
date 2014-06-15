@@ -33,6 +33,7 @@ solarApp.controller('CalcCtrl', [
       $scope.amortizationInYears = calculationResult.amortizationInYears;
       $scope.savingFromBattery = calculationResult.savingFromBattery;
       $scope.CO2Savings = calculationResult.CO2Savings;
+      $scope.KWHPerYear = calculationResult.KWHPerYear;
 
       if (calculationResult.amortizationInYears > 30 || calculationResult.error ===  'negative subsidy') {
         $scope.errorMessage = "Your panel size is inefficient!";
