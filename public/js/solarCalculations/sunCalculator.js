@@ -49,7 +49,7 @@ var sunCalculator = function () {
 
   instance.batteryToggle = false;
 
-  instance.setBattery = function(boolean){
+  instance.setBattery = function (boolean) {
     instance.batteryToggle = boolean;
   };
 
@@ -174,11 +174,26 @@ var sunCalculator = function () {
       returnObject.amortizationInYears = instance.calculateAmortization(returnObject.acquisitionCosts,
         returnObject.yearlySubsidy);
       returnObject.CO2Savings = instance.calculateCO2Savings(actualKWP, state);
+
+      if (returnObject.yearlySubsidy <= 0) {
+        setToNegativeSubsidy(returnObject);
+      }
     } else {
       returnObject.error = 'argument missing';
     }
     return returnObject;
   };
+
+  function setToNegativeSubsidy (returnObject){
+    returnObject.error = 'negative subsidy';
+    returnObject.yearlySubsidy = 0;
+    returnObject.savingFromBattery = 0;
+    returnObject.amortizationInYears = 0;
+    returnObject.acquisitionCosts = 0;
+    returnObject.CO2Savings = 0;
+
+    return returnObject;
+  }
 
   instance.adjustSubsidies = function (fixedDateInput, todayInput) {
     var fixedDate = fixedDateInput ? fixedDateInput : FIXED_DATE;
