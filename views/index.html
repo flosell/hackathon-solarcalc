@@ -11,6 +11,7 @@
     <link href="vendor/css/font-awesome.min.css" rel="stylesheet">
     <link href="vendor/css/theme.css" rel="stylesheet">
     <link href="vendor/css/wtf-forms.css" rel="stylesheet">
+    <link href="vendor/css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
@@ -119,7 +120,7 @@
                   {{errorMessage}}
               </div>
           </div>
-          <div class="row" ng-show="showResult">
+          <div class="row" ng-show="showResult" ng-animate="">
             <div ng-class="{'col-sm-6': inputData.withBattery, 'col-xs-4': !inputData.withBattery}">
               <div class="result-item">
                 <strong>Yearly Subsidy</strong><br>
@@ -138,7 +139,7 @@
                 {{amortizationInYears}}
               </div>
             </div>
-            <div class="col-xs-6" ng-if="inputData.withBattery">
+            <div class="col-xs-6" ng-if="inputData.withBattery" ng-animate="'fade">
               <div class="result-item">
                 <strong>Saving from Battery</strong><br>
                 {{savingFromBattery}}
@@ -151,6 +152,9 @@
             </div>
           </div>
           <div class="row" ng-show="showResult">
+            <div class="col-xs-12">
+              <label>Your savings</label>
+            </div>
             <div class="col-xs-6">
               <div class="result-item">
                 <i class="fa fa-flash fa-2x yellow"></i><br><strong>{{KWHPerYear | number: 0 }} kwh</strong></i>

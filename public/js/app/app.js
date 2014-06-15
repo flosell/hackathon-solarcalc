@@ -2,7 +2,8 @@
 
 var solarApp = angular.module('solarcap-app', [
   'googlechart',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'ngAnimate'
 ])
 
 solarApp.controller('CalcCtrl', [
