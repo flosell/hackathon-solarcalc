@@ -51,6 +51,8 @@ var initSearchRecommendations = function(map) {
     });
 }
 
+nokia.places.settings.setLocale("en") // force to english so that lookup by state works
+
 var recommend = function(map) {
     return function(searchTerm, callback) {
         var processResults = function (data, requestStatus, requestId) {
