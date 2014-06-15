@@ -51,14 +51,16 @@ var initSearchRecommendations = function(map) {
     });
 }
 
+nokia.places.settings.setLocale("en") // force to english so that lookup by state works
+
 var recommend = function(map) {
     return function(searchTerm, callback) {
         var processResults = function (data, requestStatus, requestId) {
             var titles = data.results.items.map(function(item) {
                 return item.title;
             });
-
-            callback(titles);
+            // deactivated because useless!
+//            callback(titles);
         }
 
         // http://stackoverflow.com/questions/9571953/nokia-ovi-map-autocomplete-feature
