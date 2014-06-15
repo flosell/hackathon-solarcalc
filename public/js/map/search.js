@@ -62,7 +62,7 @@ var recommend = function(map) {
         }
 
         searchManager = nokia.places.search.manager.findPlaces({
-            searchTerm: searchTerm,
+            searchTerm: searchTerm + ", germany",
             onComplete: processResults,
             searchCenter: map.center,
             limit: 10
