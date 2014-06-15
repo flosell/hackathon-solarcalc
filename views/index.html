@@ -52,10 +52,11 @@
     </div>
   </nav>
 
-  <div class="container-fluid full-height">
+<div class="container-fluid full-height"  ng-controller="CalcCtrl">
     <div class="row full-height">
       <div class="col-xs-12 col-sm-8 full-height">
-        <div class="full-height" id="mapContainer" ng-controller="MapCtrl"></div>
+        <button ng-click="resetMap()">reset</button>
+        <div class="full-height" id="mapContainer"></div>
       </div>
       <div class="col-xs-12 col-sm-4 panel-right full-height">
         <script type="text/ng-template" id="typeaheadTemplate.html">
@@ -63,7 +64,7 @@
             <span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
           </a>
         </script>
-        <form class="row-padding" role="form" ng-controller="CalcCtrl" ng-submit="doSearch()">
+        <form class="row-padding" role="form" ng-submit="doSearch()">
           <div class="row">
             <div class="col-xs-12">
               <!--<label for="address">Address:</label>-->

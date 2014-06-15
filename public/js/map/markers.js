@@ -157,7 +157,7 @@ var initMarkers = function(map,areaUpdatedCallback) {
     	}
     });
 
-    window.resetMarkers = function() {
+    var resetMarkers = function() {
         var i = addedCoords.length;
 
         	while (i--) {
@@ -168,5 +168,9 @@ var initMarkers = function(map,areaUpdatedCallback) {
 
         markerPolyline = null;
         map.objects.clear();
+    }
+
+    return {
+        resetMarkers: resetMarkers
     }
 }

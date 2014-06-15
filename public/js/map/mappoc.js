@@ -5,7 +5,7 @@ nokia.Settings.set("serviceMode", "cit");
 var initMap = function(areaUpdatedCallback) {
     var map = initializeMap();
     initializeWithGPSLocation(map);
-    initMarkers(map,areaUpdatedCallback);
+    var markers = initMarkers(map,areaUpdatedCallback);
 
 //    initSearchRecommendations(map);
 
@@ -18,7 +18,8 @@ var initMap = function(areaUpdatedCallback) {
     return {
         map: map,
         search : search,
-        recommend : recommend(map)
+        recommend : recommend(map),
+        reset: markers.resetMarkers,
     }
 
 

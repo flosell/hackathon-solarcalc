@@ -9,9 +9,7 @@ solarApp.controller('CalcCtrl', [
   '$rootScope',
   '$scope',
   function ($rootScope, $scope) {
-    $scope.map = {
 
-    }
     $scope.inputData = {
       selectedArea: 0,
       selectedState: "Berlin",
@@ -153,6 +151,10 @@ solarApp.controller('CalcCtrl', [
             $scope.inputData.selectedState = data.selectedState;
         })
     });
+
+    $scope.resetMap = function() {
+        $scope.map.reset();
+    }
   }
 ]);
 
