@@ -39,6 +39,10 @@ var sunCalculator = function () {
 
   var CURRENT_ENERGY_PRICE_CENT = 26;
 
+  var USED_PRODUCTION = 1.18;
+
+  var REDUCED_ENERGY_PRICE_EURO = 0.13;
+
   var instance = {};
 
   var TODAY = new Date();
@@ -81,7 +85,7 @@ var sunCalculator = function () {
   };
 
   instance.calculateAmortization = function (acquisitionCost, grossProfit) {
-    return formatFloat(acquisitionCost / grossProfit, 0);
+    return formatFloat(acquisitionCost / (calculateYearlySavings(grossProfit)), 0);
   };
 
   instance.calculateAcquisitionCosts = function (KWP, kind) {
@@ -126,6 +130,7 @@ var sunCalculator = function () {
         returnObject.yearlySubsidy);
       returnObject.CO2Savings = instance.calculateCO2Savings(actualKWP, state);
       returnObject.KWHPerYear = calculateKWHPerYear(actualKWP, state, 0);
+      returnObject.yearlySavings = calculateYearlySavings(returnObject.yearlySubsidy);
 
       if (returnObject.yearlySubsidy <= 0) {
         setToNegativeSubsidy(returnObject);
@@ -152,9 +157,17 @@ var sunCalculator = function () {
     SUBSIDIES = {'small': adjustedSubsidies[0], 'medium': adjustedSubsidies[1], 'large': adjustedSubsidies[2]};
   };
 
+  instance.calculateYearlySavings = function(){
+    return formatFloat(USED_PRODUCTION * PEOPLE * 365 * REDUCED_ENERGY_PRICE_EURO, 2);
+  };
+
 //  PRIVATE INTERFACE / HELPER METHODS
   function formatCentToEuro(cent) {
     return formatFloat((cent / 100), 2);
+  }
+
+  function calculateYearlySavings(grossProfit) {
+    return formatFloat(grossProfit + instance.calculateYearlySavings() + calculateRevenueFromBattery(), 2);
   }
 
   function formatGrammtoKG(gramm) {
@@ -195,6 +208,8 @@ var sunCalculator = function () {
   function calculateRevenueFromBattery() {
     if (instance.batteryToggle) {
       return formatFloat((SAVED_ENERGY_PER_PERSON_PER_DAY_KWH * PEOPLE * (CURRENT_ENERGY_PRICE_CENT - EXTRA_SUBSIDY_IN_CENT) * 365) / 100, 2);
+    } else {
+      return 0;
     }
   }
 
@@ -210,16 +225,8 @@ var sunCalculator = function () {
     }
   }
 
-  function calculateKWHPerYear (KWP, state, sum) {
-    if (KWP <= 10) {
-      return formatFloat(calculateKWHYearForKWPForStateSmall(KWP, state) + sum, 2);
-    } else if (KWP <= 40) {
-      var midSumMedium = calculateKWHYearForKWPForStateOther(KWP - 10, state) + sum;
-      return calculateKWHPerYear(10, state, midSumMedium);
-    } else {
-      var midSumLarge = calculateKWHYearForKWPForStateOther(KWP - 40, state) + sum;
-      return calculateKWHPerYear(40, state, midSumLarge);
-    }
+  function calculateKWHPerYear (KWP, state) {
+    return getStateKWHData(state) ? (getStateKWHData(state) * KWP) : undefined;
   }
 
   function calculateKWHYearForKWPForStateOther(KWP, state) {
@@ -240,6 +247,7 @@ var sunCalculator = function () {
     returnObject.acquisitionCosts = 0;
     returnObject.CO2Savings = 0;
     returnObject.KWHPerYear = 0;
+    returnObject.yearlySavings = 0;
 
     return returnObject;
   }

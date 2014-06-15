@@ -120,29 +120,29 @@
                   {{errorMessage}}
               </div>
           </div>
-          <div class="row" ng-show="showResult" ng-animate="">
-            <div ng-class="{'col-sm-6': inputData.withBattery, 'col-xs-4': !inputData.withBattery}">
+          <div class="row">
+            <div class="col-sm-6">
               <div class="result-item">
                 <strong>Yearly Subsidy</strong><br>
                 {{ subsidy | currency : ""}} EUR
               </div>
             </div>
-            <div ng-class="{'col-sm-6': inputData.withBattery, 'col-xs-4': !inputData.withBattery}">
+            <div class="col-sm-6">
               <div class="result-item">
                 <strong>Acquisition Cost</strong><br>
                 {{ acquisitionCosts | currency: ""}} EUR
               </div>
             </div>
-            <div ng-class="{'col-sm-6': inputData.withBattery, 'col-xs-4': !inputData.withBattery}">
+            <div class="col-sm-6">
               <div class="result-item">
                 <strong>Amortization in years</strong><br>
                 {{amortizationInYears}}
               </div>
             </div>
-            <div class="col-xs-6" ng-if="inputData.withBattery" ng-animate="'fade">
+            <div class="col-xs-6">
               <div class="result-item">
-                <strong>Saving from Battery</strong><br>
-                {{savingFromBattery}}
+                <strong>Yearly Energy Savings</strong><br>
+                {{yearlySavings | currency: ""}} EUR
               </div>
             </div>
           </div>
