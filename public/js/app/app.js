@@ -35,6 +35,7 @@ solarApp.controller('CalcCtrl', [
       $scope.amortizationInYears = calculationResult.amortizationInYears;
       $scope.savingFromBattery = calculationResult.savingFromBattery;
       $scope.yearlySavings = calculationResult.yearlySavings;
+      $scope.yearlyMoney = calculationResult.yearlyMoney;
       $scope.CO2Savings = calculationResult.CO2Savings;
       $scope.KWHPerYear = calculationResult.KWHPerYear;
 
