@@ -154,7 +154,7 @@ describe('sunCalculator', function () {
         savingFromBattery: 208.78,
         amortizationInYears: 14,
         KWHPerYear: 62518.38,
-        yearlySavings: 7375.83,
+        yearlySavings: 432.74,
         error: undefined
       };
 
@@ -171,7 +171,7 @@ describe('sunCalculator', function () {
         CO2Savings: 43762.87,
         amortizationInYears: 13,
         KWHPerYear: 62518.38,
-        yearlySavings: 7442.43,
+        yearlySavings: 108.19,
         error: undefined
       };
 
@@ -181,7 +181,7 @@ describe('sunCalculator', function () {
     it('should return object with error if sqm is missing', function () {
       expect(calculator.calculateSolarCap(undefined, 'Baden-Wurttemberg', 4, 'HOME').error).toEqual('argument missing');
     });
-    
+
     it('should render error when yearly subsidy is negative', function () {
       var returnObject = {
         yearlySubsidy: 0,

@@ -85,7 +85,7 @@ var sunCalculator = function () {
   };
 
   instance.calculateAmortization = function (acquisitionCost, grossProfit) {
-    return formatFloat(acquisitionCost / (calculateYearlySavings(grossProfit)), 0);
+    return formatFloat(acquisitionCost / (calculateYearlySavings() + grossProfit), 0);
   };
 
   instance.calculateAcquisitionCosts = function (KWP, kind) {
@@ -130,7 +130,7 @@ var sunCalculator = function () {
         returnObject.yearlySubsidy);
       returnObject.CO2Savings = instance.calculateCO2Savings(actualKWP, state);
       returnObject.KWHPerYear = calculateKWHPerYear(actualKWP, state, 0);
-      returnObject.yearlySavings = calculateYearlySavings(returnObject.yearlySubsidy);
+      returnObject.yearlySavings = calculateYearlySavings();
 
       if (returnObject.yearlySubsidy <= 0) {
         setToNegativeSubsidy(returnObject);
@@ -166,8 +166,8 @@ var sunCalculator = function () {
     return formatFloat((cent / 100), 2);
   }
 
-  function calculateYearlySavings(grossProfit) {
-    return formatFloat(grossProfit + instance.calculateYearlySavings() + calculateRevenueFromBattery(), 2);
+  function calculateYearlySavings() {
+    return formatFloat(instance.calculateYearlySavings() + calculateRevenueFromBattery(), 2);
   }
 
   function formatGrammtoKG(gramm) {
