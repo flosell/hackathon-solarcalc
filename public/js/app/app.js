@@ -24,6 +24,7 @@ solarApp.controller('CalcCtrl', [
 
     $scope.subsidy = "";
     $scope.acquisitionCosts = "";
+    $scope.showResult = false;
 
     $scope.$watch("inputData",function(data) {
       var calculator = sunCalculator();
