@@ -21,10 +21,10 @@ var searchAddress = function(searchTerm, callback) {
                 // Next we add the marker(s) to the map's object collection so they will be rendered onto the map
                 callback(coords[0]);
             } else {
-                alert("Your search produced no results!");
+                // no results for the given address, we don't do anything
             }
         } else {
-            alert("The search request failed");
+            // no error handling at this time...
         }
     };
     searchManager = nokia.places.search.manager.geoCode({
