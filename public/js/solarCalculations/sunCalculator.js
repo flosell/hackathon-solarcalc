@@ -210,16 +210,8 @@ var sunCalculator = function () {
     }
   }
 
-  function calculateKWHPerYear (KWP, state, sum) {
-    if (KWP <= 10) {
-      return formatFloat(calculateKWHYearForKWPForStateSmall(KWP, state) + sum, 2);
-    } else if (KWP <= 40) {
-      var midSumMedium = calculateKWHYearForKWPForStateOther(KWP - 10, state) + sum;
-      return calculateKWHPerYear(10, state, midSumMedium);
-    } else {
-      var midSumLarge = calculateKWHYearForKWPForStateOther(KWP - 40, state) + sum;
-      return calculateKWHPerYear(40, state, midSumLarge);
-    }
+  function calculateKWHPerYear (KWP, state) {
+    return getStateKWHData(state) ? (getStateKWHData(state) * KWP) : undefined;
   }
 
   function calculateKWHYearForKWPForStateOther(KWP, state) {

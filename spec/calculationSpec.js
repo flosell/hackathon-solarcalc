@@ -152,7 +152,7 @@ describe('sunCalculator', function () {
         CO2Savings: 43762.87,
         savingFromBattery: 208.78,
         amortizationInYears: 15,
-        KWHPerYear: 58018.65,
+        KWHPerYear: 62518.38,
         error: undefined
       };
 
@@ -168,7 +168,7 @@ describe('sunCalculator', function () {
         savingFromBattery: 52.20,
         CO2Savings: 43762.87,
         amortizationInYears: 14,
-        KWHPerYear: 61018.65,
+        KWHPerYear: 62518.38,
         error: undefined
       };
 
