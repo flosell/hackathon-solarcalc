@@ -102,7 +102,7 @@ solarApp.controller('CalcCtrl', [
           }
         },
         "hAxis": {
-          "title": "Time"
+          "title": "Time of day (24 hours)"
         }
       },
       "formatters": {}
