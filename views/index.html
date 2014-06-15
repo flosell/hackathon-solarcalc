@@ -81,7 +81,7 @@
           </div>
           <div class="row">
             <div class="col-xs-4">
-              <label>Type:</label>
+              <label class="center-block">Type</label>
               <div class="btn-group btn-group-justified type-picker">
                 <div class="btn-group">
                   <button type="button" class="btn btn-white" ng-model="inputData.kind" radio="HOME"><i class="fa fa-home fa-2x"></i><br>House</button>
@@ -92,18 +92,18 @@
               </div>
             </div>
             <div class="col-xs-5">
-              <label>Residents:</label>
-              <div class="rating-list">
-                <i class="fa fa-child fa-3x rating-item" ng-class="{'active': inputData.residents >= 1}" ng-click="setRatingValue(1)"></i>
-                <i class="fa fa-child fa-3x rating-item" ng-class="{'active': inputData.residents >= 2}" ng-click="setRatingValue(2)"></i>
+              <label class="center-block">Residents</label>
+              <div class="rating-list center block">
+                <i class="fa fa-female fa-3x rating-item" ng-class="{'active': inputData.residents >= 1}" ng-click="setRatingValue(1)"></i>
+                <i class="fa fa-male fa-3x rating-item" ng-class="{'active': inputData.residents >= 2}" ng-click="setRatingValue(2)"></i>
                 <i class="fa fa-child fa-3x rating-item" ng-class="{'active': inputData.residents >= 3}" ng-click="setRatingValue(3)"></i>
                 <i class="fa fa-child fa-3x rating-item" ng-class="{'active': inputData.residents >= 4}" ng-click="setRatingValue(4)"></i>
                 <i class="fa fa-child fa-3x rating-item" ng-class="{'active': inputData.residents == 5}" ng-click="setRatingValue(5)"></i>
               </div>
             </div>
             <div class="col-xs-3">
-              <label>Battery</label>
-              <button class="btn btn-white" ng-class="{'active': inputData.withBattery}" type="button" ng-click="inputData.withBattery = !inputData.withBattery"><i class="flaticon-battery106"></i><br>Use Battery</button>
+              <label class="center-block">Battery</label>
+              <button class="btn btn-white btn-block" ng-class="{'active': inputData.withBattery}" type="button" ng-click="inputData.withBattery = !inputData.withBattery"><i class="flaticon-battery106"></i><br>Use Battery</button>
             </div>
           </div>
           <div class="row" ng-if="errorMessage != ''">
@@ -111,7 +111,7 @@
                   {{errorMessage}}
               </div>
           </div>
-          <div class="row">
+          <div class="row" ng-show="showResult">
             <div class="col-sm-4">
               <div class="result-item">
                 <strong>{{ subsidy | number: 0}} EUR</strong><br>
@@ -138,22 +138,21 @@
           </div>
           <div class="row" ng-show="showResult">
             <div class="col-xs-12">
-              <label>Your savings</label>
+              <label>Your yearly savings</label>
             </div>
             <div class="col-xs-6">
               <div class="result-item">
-                <i class="fa fa-flash fa-2x yellow"></i><br><strong>{{KWHPerYear | number: 0 }} kwh</strong></i>
+                <i class="fa fa-flash fa-2x yellow pull-right"></i><strong>{{KWHPerYear | number: 0 }} kwh</strong></i>
               </div>
             </div>
             <div class="col-xs-6">
               <div class="result-item">
-                <i class="fa fa-leaf green fa-2x"></i><br><strong>{{CO2Savings | number : 0}} kg CO2 / year</strong>
+                <i class="fa fa-leaf green fa-2x pull-left"></i><strong>{{CO2Savings | number : 0}} kg CO2</strong>
               </div>
             </div>
             <div class="col-xs-12">
               <div class="result-item">
-                <strong>Yearly Savings</strong><br>
-                {{yearlyMoney | number: 0}} EUR
+                <img class="img-responsive pull-left" src="img/wallet.png" width="26"><strong>{{yearlyMoney | number: 0}} EUR</strong>
               </div>
             </div>
           </div>
