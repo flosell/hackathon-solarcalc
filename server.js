@@ -24,6 +24,6 @@ app.get('/api', function (req, res) {
 
   res.json(result);
 });
-
-http.listen(8081);
-console.log("App listening on port 8081");
+var port = Number(process.env.PORT || 8081);
+http.listen(port);
+console.log("App listening on port "+port);
