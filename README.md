@@ -19,8 +19,8 @@ Build status
 Integration Environment
 -----------------------
 
-- App: http://hackathon-solarcalc-env-yp6qn2gmet.elasticbeanstalk.com/
-- API: http://hackathon-solarcalc-env-yp6qn2gmet.elasticbeanstalk.com/api?area=2000&residents=1&kind=HOME&state=Bavaria&withBattery=true
+- App: http://solarcap.herokuapp.com/
+- API: http://solarcap.herokuapp.com/api?area=2000&residents=1&kind=HOME&state=Bavaria&withBattery=true
 
 
 
